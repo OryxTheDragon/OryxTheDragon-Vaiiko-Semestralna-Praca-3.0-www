@@ -106,7 +106,7 @@ $app = new App();
             Select a Character
             <br>
             <select name="characters" onchange="showCharacterData(this.value)">
-            <option>-None-</option>
+            <option>-none-</option>
                 <?php
                 /** @var Character $Character */
                 if($app->listCharacterData() != false){
