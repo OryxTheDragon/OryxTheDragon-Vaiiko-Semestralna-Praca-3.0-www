@@ -2,39 +2,105 @@
 
 $charNickname = strval($_GET["q"]);
 
+
 $con = mysqli_connect('localhost', 'root', 'dtb456', 'databaza');
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-mysqli_select_db($con, "ajax_demo");
 $sql = $con->prepare("SELECT * FROM characters WHERE nickname = ? ");
 $sql->bind_param("s", $charNickname);
 $sql->execute();
 $result = $sql->get_result();
 
 echo "<table class='table table-dark'>
-        <tr>
-            <th>character_id</th>
-            <th>user_id</th>
-            <th>nickname</th>
-            <th>character_prof_id</th>
-            <th>character_spec_id</th>
-            <th>character_race_id</th>
-            <th>character_gender</th>
-        </tr>";
+        <thead class='thead-dark'>
+            <tr>
+                <th>Character ID</th>
+                <th>User </th>
+                <th>Nickname </th>
+                <th>Profession </th>
+                <th>Specification </th>
+                <th>Race </th>
+                <th>Gender </th>
+            </tr>
+        </thead>";
+$characterID = "";
+$userID = "";
+$nickname = "";
+$professionID = "";
+$SpecialisationID = "";
+$raceID = "";
+$genderID = "";
 
 while ($row = $result->fetch_assoc()) {
-    echo "<tr>";
-    echo "<td>" . $row['character_id'] . "</td>";
-    echo "<td>" . $row['user_id'] . "</td>";
-    echo "<td>" . $row['nickname'] . "</td>";
-    echo "<td>" . $row['character_prof_id'] . "</td>";
-    echo "<td>" . $row['character_spec_id'] . "</td>";
-    echo "<td>" . $row['character_race_id'] . "</td>";
-    echo "<td>" . $row['character_gender'] . "</td>";
-    echo "</tr>";
+    $characterID = $row['character_id'];
+    $userID = $row['user_id'];
+    $nickname = $row['nickname'];
+    $professionID = $row['character_prof_id'];
+    $specialisationID = $row['character_spec_id'];
+    $raceID = $row['character_race_id'];
+    $genderID = $row['character_gender_id'];
 }
+
+echo "<tr class='thead-light'>";
+
+echo "<td>#" . $characterID . "</td>";
+
+$sql = ("SELECT username FROM users WHERE id =".$userID);
+$result = $con->query($sql);
+if ($result->num_rows > 0) {
+    ($row = $result->fetch_assoc());
+    $username = $row['username'];
+        echo "<td>" . $username . "</td>";
+} else {
+    echo "<td>N/A</td>";
+}
+
+echo "<td>" . $nickname . "</td>";
+
+
+$sql = ("SELECT profession_name FROM professions WHERE profession_id =".$professionID);
+$result = $con->query($sql);
+if ($result->num_rows > 0) {
+    ($row = $result->fetch_assoc());
+    $profession = $row['profession_name'];
+    echo "<td>" . $profession . "</td>";
+} else {
+    echo "<td>N/A</td>";
+}
+
+$sql = ("SELECT specialisation_name FROM specialisations WHERE specialisation_id =".$specialisationID);
+$result = $con->query($sql);
+if ($result->num_rows > 0) {
+    ($row = $result->fetch_assoc());
+    $specialisation = $row['specialisation_name'];
+    echo "<td>" . $specialisation . "</td>";
+} else {
+    echo "<td>N/A</td>";
+}
+
+$sql = ("SELECT race_name FROM races WHERE race_id =".$raceID);
+$result = $con->query($sql);
+if ($result->num_rows > 0) {
+    ($row = $result->fetch_assoc());
+    $race = $row['race_name'];
+    echo "<td>" . $race . "</td>";
+} else {
+    echo "<td>N/A</td>";
+}
+
+$sql = ("SELECT gender_name FROM genders WHERE gender_id =".$genderID);
+$result = $con->query($sql);
+if ($result->num_rows > 0) {
+    ($row = $result->fetch_assoc());
+    $gender = $row['gender_name'];
+    echo "<td>" . $gender . "</td>";
+} else {
+    echo "<td>N/A</td>";
+}
+
+echo "</tr>";
 
 echo "</table>";
 

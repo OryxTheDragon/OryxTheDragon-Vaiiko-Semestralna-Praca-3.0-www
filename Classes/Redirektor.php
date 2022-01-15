@@ -38,4 +38,8 @@ abstract class Redirektor
         Header("Location:vytvorCharakter.php");
     }
 
+    public static function redirectNastavenia()
+    {
+        Header("Location:profiloveNastavenia.php");
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace Classes;
 
-use DOMDocument;
 
 require "User.php";
 require "IStorage.php";
@@ -46,10 +45,6 @@ class App
         }
 
 
-        if (isset($_REQUEST["loadCharacter"])) {
-            $this->storage->loadCharacter();
-        }
-
         if (isset($_REQUEST["listCharacters"])) {
             $this->storage->getUserCharacters();
         }
@@ -67,14 +62,11 @@ class App
         if (isset($_REQUEST["vytvoritCharakter"])) {
             Redirektor::tvorbaCharakteru();
         }
-        if (isset($_REQUEST["redirectPremenovanie"])) {
-            Redirektor::redirectPremenovanie();
-        }
-        if (isset($_REQUEST["redirectZmenaHesla"])) {
-            Redirektor::redirectZmenaHesla();
-        }
         if (isset($_REQUEST["redirectTvorbaCharactera"])) {
             Redirektor::redirectTvorbaCharaktera();
+        }
+        if (isset($_REQUEST["redirectNastavenia"])) {
+            Redirektor::redirectNastavenia();
         }
     }
 
