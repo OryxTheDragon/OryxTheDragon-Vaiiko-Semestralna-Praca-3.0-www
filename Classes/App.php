@@ -84,4 +84,8 @@ class App
     {
         return $this->storage->getUserCharacters();
     }
+    public function getSpecializacie(int $prof)
+    {
+        return $this->storage->getSpecializacie($prof);
+    }
 }

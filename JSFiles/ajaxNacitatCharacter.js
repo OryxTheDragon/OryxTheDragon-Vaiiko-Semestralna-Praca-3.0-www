@@ -12,11 +12,11 @@ function showCharacterData(charNickname) {
     xhr.onreadystatechange = function() {
         if (this.readyState===4 && this.status===200) {
             document.getElementById("characterVypis").innerHTML=this.responseText;
+            console.log(this.responseText);
         }
     }
     xhr.open("GET","../AJAX_PHP_Files/ajaxNacitatCharacter.php?q="+name,true);
 
     xhr.send();
-
     return true;
 }

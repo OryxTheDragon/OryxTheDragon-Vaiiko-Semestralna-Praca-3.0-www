@@ -11,6 +11,8 @@ class Character
     private $character_prof_id;
     private $character_spec_id;
     private $character_race_id;
+    private $character_gender_id;
+
 
     /**
      * @param character_id
@@ -20,7 +22,7 @@ class Character
      * @param $character_spec_id
      * @param $character_race_id
      */
-    public function __construct($character_id, $user_id, $nickname, $character_prof_id, $character_spec_id, $character_race_id)
+    public function __construct($character_id, $user_id, $nickname, $character_prof_id, $character_spec_id, $character_race_id, $character_gender_id)
     {
         $this->character_id = $character_id;
         $this->user_id = $user_id;
@@ -28,11 +30,12 @@ class Character
         $this->character_prof_id = $character_prof_id;
         $this->character_spec_id = $character_spec_id;
         $this->character_race_id = $character_race_id;
+        $this->character_gender_id = $character_gender_id;
     }
 
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCharacterRaceId()
     {
@@ -40,7 +43,7 @@ class Character
     }
 
     /**
-     * @param mixed $character_race_id
+     * @param integer $character_race_id
      */
     public function setCharacterRaceId($character_race_id): void
     {
@@ -48,7 +51,7 @@ class Character
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCharacter_id()
     {
@@ -56,7 +59,7 @@ class Character
     }
 
     /**
-     * @param mixed $character_id
+     * @param integer $character_id
      */
     public function setCharacter_id($character_id): void
     {
@@ -64,7 +67,7 @@ class Character
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getUserId()
     {
@@ -72,7 +75,7 @@ class Character
     }
 
     /**
-     * @param mixed $user_id
+     * @param integer $user_id
      */
     public function setUserId($user_id): void
     {
@@ -96,7 +99,7 @@ class Character
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCharacterprofId()
     {
@@ -104,7 +107,7 @@ class Character
     }
 
     /**
-     * @param mixed $character_prof_id
+     * @param integer $character_prof_id
      */
     public function setCharacterprofId($character_prof_id): void
     {
@@ -112,7 +115,7 @@ class Character
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCharacterSpecId()
     {
@@ -120,11 +123,26 @@ class Character
     }
 
     /**
-     * @param mixed $character_spec_id
+     * @param integer $character_spec_id
      */
     public function setCharacterSpecId($character_spec_id): void
     {
         $this->character_spec_id = $character_spec_id;
     }
 
+    /**
+     * @return integer
+     */
+    public function getCharacterGenderId()
+    {
+        return $this->character_gender_id;
+    }
+
+    /**
+     * @param integer $character_gender_id
+     */
+    public function setCharacterGenderId($character_gender_id): void
+    {
+        $this->character_gender_id = $character_gender_id;
+    }
 }

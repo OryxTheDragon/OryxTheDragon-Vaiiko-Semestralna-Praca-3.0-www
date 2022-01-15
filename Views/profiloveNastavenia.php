@@ -13,7 +13,7 @@ $app = new App();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Guild Wars 2 - Character Simulator</title>
+    <title>Guild Wars 2 - nastavenia profilu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -41,10 +41,9 @@ $app = new App();
     </div>
 </nav>
 <nav class="navbar  bg-dark navbar-dark justify-content-center">
-    <div class="col-2"></div>
-    <div class="col-2 text-center">
+    <div class="col-2 text-center innerbox">
         <h3>Zmena Hesla</h3>
-        <br>
+        <hr>
         <form method="zmenitHeslo" class="username">
             <label for="oldPassword"><h4>Staré heslo:</h4></label>
             <input type="password" class="form-control mb-2" name="oldPassword" id="oldPassword"
@@ -56,11 +55,13 @@ $app = new App();
             </button>
         </form>
     </div>
-    <div class="col-4"></div>
-    <div class="col-2 text-center">
 
+    <div class="col-2 text-center innerbox">
+    <?php
+    //TODO pridat este cierne stvorce na columy.
+    ?>
         <h3>Zmena Hesla</h3>
-        <br>
+        <hr>
         <form method="premenovat" class="username">
             <label for="newUsername"><h4>Nové meno:</h4></label>
             <br>
@@ -70,7 +71,6 @@ $app = new App();
             <button class="btn btn-primary btn " type="submit" name="premenovat" value="premenovat">Zmeniť Meno</button>
         </form>
     </div>
-    <div class="col-2"></div>
 </nav>
 <nav class="navbar  bg-dark navbar-dark justify-content-center">
 

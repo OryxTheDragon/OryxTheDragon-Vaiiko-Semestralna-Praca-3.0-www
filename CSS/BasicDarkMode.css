@@ -10,10 +10,15 @@ body{
 
 h4{
     font-weight: bold;
-    color:lightskyblue;
 }
 
 h3{
     font-weight: bold;
-    color:coral;
+}
+
+.innerbox{
+    margin:10%;
+    min-width:20%;
+    border:rgb(25,25,25) solid 25px;
+    background-color: rgb(25,25,25);
 }

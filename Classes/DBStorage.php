@@ -36,7 +36,7 @@ class DBStorage implements IStorage
     {
         if (!$this->validateUsername($user->getUsername())){
             echo "<script>alert('Wrong username attempted for input into database.')</script>";
-            return -3;
+            return -2;
         }
         if (!$this->validatePassword($user->getPassword())){
             echo "<script>alert('Wrong password attempted for input into database.')</script>";
@@ -72,7 +72,7 @@ class DBStorage implements IStorage
     {
         if (!$this->validateUsername($newUsername)){
             echo "<script>alert('Wrong new username attempted for input.')</script>";
-            return -3;
+            return -2;
         }
         if (Authenticator::isLogged()) {
             $stmt = $this->db->prepare("UPDATE users SET username = ? WHERE username = ? ");
@@ -91,7 +91,7 @@ class DBStorage implements IStorage
     {
         if (!$this->validatePassword($oldPassword)){
             echo "<script>alert('Wrong old password attempted for input.')</script>";
-            return -3;
+            return -2;
         }
 
         if (!$this->validatePassword($newPassword)){
@@ -133,7 +133,7 @@ class DBStorage implements IStorage
     {
         if (!$this->validateUsername($username)){
             echo "<script>alert('Wrong username attempted for input.')</script>";
-            return -3;
+            return -2;
         }
         if (!$this->validatePassword($password)){
             echo "<script>alert('Wrong password attempted for.')</script>";
@@ -172,7 +172,25 @@ class DBStorage implements IStorage
         $dbResult = $this->db->query($sql);
         if ($dbResult->num_rows > 0) {
             while ($record = $dbResult->fetch_assoc()) {
-                $result[] = new Character($record['character_id'], $record['user_id'], $record['nickname'], $record['character_prof_id'], $record['character_spec_id'], $record['character_race_id']);
+                $result[] = new Character($record['character_id'], $record['user_id'], $record['nickname'], $record['character_prof_id'], $record['character_spec_id'], $record['character_race_id'], $record['character_gender_id']);
+            }
+        }
+        return $result;
+    }
+
+    //TODO asi este nefunguje, treba otestovat.
+    public function getSpecializacie($profesia)
+    {
+        $result = [];
+        $sql = $this->db->prepare("SELECT specialisation_name FROM specialisations WHERE specialisation_prof_id = ?");
+        $sql->bind_param('s', $profesia);
+        $sql->execute();
+        $dbResult = $sql->get_result();
+        $i = 0;
+        if ($dbResult->num_rows > 0) {
+            while ($record = $dbResult->fetch_assoc()) {
+                $result[$i] = $record["specialisation_name"];
+                $i++;
             }
         }
         return $result;
@@ -180,11 +198,52 @@ class DBStorage implements IStorage
 
     public function createCharacter(Character $character)
     {
+        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
+        $result = $this->db->query($sql);
+        $characterUserID = $result['user_id'];
+
+        if (!$this->validateNickname($character->getNickname())){
+            echo '<script>alert("Nickname characteru je nevyhovujúci.")</script>';
+            return -2;
+        }
+        $characterNickname = $character->getNickname();
+
+        if (!$this->validateNickname($character->getCharacterprofId())){
+            echo '<script>alert("Zadaná profesia je nevyhovujúca.")</script>';
+            return -2;
+        }
+        $characterProfession = $character->getCharacterprofId();
+
+        if (!$this->validateNickname($character->getCharacterSpecId())){
+            echo '<script>alert("Zadaná špecializácia characteru je nevyhovujúca.")</script>';
+            return -2;
+        }
+        $characterSpecialisation = $character->getCharacterSpecId();
+
+        if (!$this->validateNickname($character->getCharacterRaceId())){
+            echo '<script>alert("Zadaná rasa characteru neprešla validáciou.")</script>';
+            return -2;
+        }
+        $characterRace = $character->getCharacterRaceId();
+
+        if (!$this->validateNickname($character->getCharacterGenderId())){
+            echo '<script>alert("Zadané pohlavie characteru neprešlo validáciou.")</script>';
+            return -2;
+        }
+        $characterGender = $character->getCharacterGenderId();
+
+        $stmt = $this->db->prepare("UPDATE character SET user_id = ?, nickname = ?, character_prof_id = ?, character_spec_id = ?, character_race_id = ?, character_gender_id = ?");
+        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+        $stmt->execute();
+        $this->checkDBErrors();
+        echo '<script>alert("Character uspesne vytvoreny.")</script>';
+
     }
 
-
-
-    // Validacia zo strany servra.
+    /*
+     *   Validacia zo strany servra.
+     *
+     * */
     private function validateUsername(string $getUsername)
     {
         if (strlen($getUsername) < 4) {
@@ -196,6 +255,44 @@ class DBStorage implements IStorage
     private function validatePassword(string $getPassword)
     {
         if (strlen($getPassword) < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    private function validateGender(string $getGender)
+    {
+        if (strlen($getGender) < 8) {
+            return false;
+        }
+        return true;
+    }
+    private function validateProfession(string $getProfession)
+    {
+        if (strlen($getProfession) < 8) {
+            return false;
+        }
+        return true;
+    }
+    private function validateRace(string $getRace)
+    {
+        if (strlen($getRace) < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    private function validateSpecialisation(string $getSpecialisation)
+    {
+        if (strlen($getSpecialisation) < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    private function validateNickname(string $getNickname)
+    {
+        if (strlen($getNickname) < 4) {
             return false;
         }
         return true;
