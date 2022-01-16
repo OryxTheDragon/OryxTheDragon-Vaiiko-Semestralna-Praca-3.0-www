@@ -172,7 +172,20 @@ class DBStorage implements IStorage
         $dbResult = $this->db->query($sql);
         if ($dbResult->num_rows > 0) {
             while ($record = $dbResult->fetch_assoc()) {
-                $result[] = new Character($record['character_id'], $record['user_id'], $record['nickname'], $record['character_prof_id'], $record['character_spec_id'], $record['character_race_id'], $record['character_gender_id']);
+                $result[] = new Character($record['user_id'], $record['nickname'], $record['character_prof_id'], $record['character_spec_id'], $record['character_race_id'], $record['character_gender_id']);
+            }
+        }
+        return $result;
+    }
+
+    public function getUserID()
+    {
+        $result = -1;
+        $sql = ("SELECT id FROM users WHERE username = " . '"' . Authenticator::getName() . '")');
+        $dbResult = $this->db->query($sql);
+        if ($dbResult->num_rows > 0) {
+            while ($record = $dbResult->fetch_assoc()) {
+                $result = $record['id'];
             }
         }
         return $result;
@@ -196,53 +209,64 @@ class DBStorage implements IStorage
         return $result;
     }
 
-    public function createCharacter(Character $character)
+//    public function createCharacter(Character $character)
+//    {
+//        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
+//        $result = $this->db->query($sql);
+//        $characterUserID = $result['user_id'];
+//        $result->free_result();
+//
+//        if (!$this->validateNickname($character->getNickname())){
+//            return -2;
+//        }
+//        $characterNickname = $character->getNickname();
+//
+//        if (!$this->validateProfession($character->getCharacterprofId())){
+//            return -2;
+//        }
+//
+//        $characterProfession = $character->getCharacterprofId();
+//
+//        if (!$this->validateSpecialisation($characterProfession,$character->getCharacterSpecId())){
+//            return -2;
+//        }
+//        $characterSpecialisation = $character->getCharacterSpecId();
+//
+//        if (!$this->validateRace($character->getCharacterRaceId())){
+//            return -2;
+//        }
+//        $characterRace = $character->getCharacterRaceId();
+//
+//        if (!$this->validateGender($character->getCharacterGenderId())){
+//            return -2;
+//        }
+//        $characterGender = $character->getCharacterGenderId();
+//
+//        $stmt = $this->db->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
+//        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+//        $stmt->execute();
+//        $this->checkDBErrors();
+//
+//        echo '<script>alert("Character uspesne vytvoreny.")</script>';
+//    }
+
+
+    public function deleteCharacter($characterID)
     {
-        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
-        $result = $this->db->query($sql);
-        $characterUserID = $result['user_id'];
-
-        if (!$this->validateNickname($character->getNickname())){
-            echo '<script>alert("Nickname characteru je nevyhovujúci.")</script>';
-            return -2;
+        $userID = $this->getUserID();
+        $stmt = $this->db->prepare("DELETE FROM characters WHERE character_id = ? AND user_id = ?");
+        $stmt->bind_param('ss',$characterID,$userID);
+        if ($stmt->execute()){
+            $this->checkDBErrors();
+            echo '<script>alert("Character uspesne zmazany.")</script>';
+            return true;
         }
-        $characterNickname = $character->getNickname();
-
-        if (!$this->validateNickname($character->getCharacterprofId())){
-            echo '<script>alert("Zadaná profesia je nevyhovujúca.")</script>';
-            return -2;
-        }
-        $characterProfession = $character->getCharacterprofId();
-
-        if (!$this->validateNickname($character->getCharacterSpecId())){
-            echo '<script>alert("Zadaná špecializácia characteru je nevyhovujúca.")</script>';
-            return -2;
-        }
-        $characterSpecialisation = $character->getCharacterSpecId();
-
-        if (!$this->validateNickname($character->getCharacterRaceId())){
-            echo '<script>alert("Zadaná rasa characteru neprešla validáciou.")</script>';
-            return -2;
-        }
-        $characterRace = $character->getCharacterRaceId();
-
-        if (!$this->validateNickname($character->getCharacterGenderId())){
-            echo '<script>alert("Zadané pohlavie characteru neprešlo validáciou.")</script>';
-            return -2;
-        }
-        $characterGender = $character->getCharacterGenderId();
-
-        $stmt = $this->db->prepare("UPDATE character SET user_id = ?, nickname = ?, character_prof_id = ?, character_spec_id = ?, character_race_id = ?, character_gender_id = ?");
-        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
-        $stmt->execute();
-        $this->checkDBErrors();
-        echo '<script>alert("Character uspesne vytvoreny.")</script>';
-
+        echo '<script>alert("Character sa nepodarilo zmazat.")</script>';
+        return false;
     }
 
     /*
      *   Validacia zo strany servra.
-     *
      * */
     private function validateUsername(string $getUsername)
     {
@@ -260,31 +284,35 @@ class DBStorage implements IStorage
         return true;
     }
 
-    private function validateGender(string $getGender)
+    private function validateGender(int $getGender)
     {
-        if (strlen($getGender) < 8) {
+        if (!($getGender > 0 && $getGender<= 3)){
+            echo "<script>alert('Zle zadane pohlavie!')</script>";
             return false;
         }
         return true;
     }
-    private function validateProfession(string $getProfession)
+    private function validateProfession(int $getProfession)
     {
-        if (strlen($getProfession) < 8) {
+        if (!($getProfession > 0 && $getProfession <= 9)){
+            echo "<script>alert('Zle zadana profesia!')</script>";
             return false;
         }
         return true;
     }
-    private function validateRace(string $getRace)
+    private function validateRace(int $getRace)
     {
-        if (strlen($getRace) < 8) {
+        if (!($getRace > 0 && $getRace<= 5)){
+            echo "<script>alert('Zle zadana rasa!')</script>";
             return false;
         }
         return true;
     }
 
-    private function validateSpecialisation(string $getSpecialisation)
+    private function validateSpecialisation(int $getProfessia,$getSpecialisation)
     {
-        if (strlen($getSpecialisation) < 8) {
+        if (!($getSpecialisation >= ($getProfessia*3 + 15) && $getSpecialisation <= ($getProfessia*3 + 17))){
+            echo "<script>alert('Zle zadana specializacia!')</script>";
             return false;
         }
         return true;
@@ -292,7 +320,12 @@ class DBStorage implements IStorage
 
     private function validateNickname(string $getNickname)
     {
-        if (strlen($getNickname) < 4) {
+        if (!(strlen($getNickname)  > 3)){
+            echo "<script>alert('Zadany nickname je prilis kratky!')</script>";
+            return false;
+        }
+        if (!(strlen($getNickname)  <= 15)){
+            echo "<script>alert('Zadany nickname je prilis dlhy!)</script>";
             return false;
         }
         return true;

@@ -15,7 +15,7 @@ function showCharacterData(charNickname) {
             console.log(this.responseText);
         }
     }
-    xhr.open("GET","../AJAX_PHP_Files/ajaxNacitatCharacter.php?q="+name,true);
+    xhr.open("GET","../AJAX_PHP_Files/ajaxNacitajCharacter.php?q="+name,true);
 
     xhr.send();
     return true;

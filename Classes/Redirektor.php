@@ -23,16 +23,6 @@ abstract class Redirektor
         Header("Location:vytvorCharakter.php");
     }
 
-    public static function redirectZmenaHesla()
-    {
-        Header("Location:zmenaHesla.php");
-    }
-
-    public static function redirectPremenovanie()
-    {
-        Header("Location:premenovanie.php");
-    }
-
     public static function redirectTvorbaCharaktera()
     {
         Header("Location:vytvorCharakter.php");

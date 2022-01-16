@@ -46,6 +46,7 @@ while ($row = $result->fetch_assoc()) {
 echo "<tr class='thead-light'>";
 
 echo "<td>#" . $characterID . "</td>";
+$_REQUEST["characterID"] = $characterID;
 
 $sql = ("SELECT username FROM users WHERE id =".$userID);
 $result = $con->query($sql);
@@ -103,5 +104,11 @@ if ($result->num_rows > 0) {
 echo "</tr>";
 
 echo "</table>";
-
+echo "<form method='Post'>
+                            <ul class='nav-item p-1' >
+                                <input type='text' name='characterID' style='display: none' value='".$characterID."'></input>
+                                <button class='btn btn-secondary btn-danger' type='submit' name='zmazatCharakter'>Zmazat Charakter
+                                </button>
+                            </ul>
+                        </form>";
 mysqli_close($con);

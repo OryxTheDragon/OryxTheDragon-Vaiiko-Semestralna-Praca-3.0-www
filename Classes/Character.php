@@ -22,9 +22,8 @@ class Character
      * @param $character_spec_id
      * @param $character_race_id
      */
-    public function __construct($character_id, $user_id, $nickname, $character_prof_id, $character_spec_id, $character_race_id, $character_gender_id)
+    public function __construct($user_id, $nickname, $character_prof_id, $character_spec_id, $character_race_id, $character_gender_id)
     {
-        $this->character_id = $character_id;
         $this->user_id = $user_id;
         $this->nickname = $nickname;
         $this->character_prof_id = $character_prof_id;

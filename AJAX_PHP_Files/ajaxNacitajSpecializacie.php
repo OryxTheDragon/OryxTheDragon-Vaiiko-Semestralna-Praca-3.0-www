@@ -8,6 +8,7 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
+
 if ($profID > 0 && $profID <= 9) {
     $sql = ("SELECT specialisation_id,specialisation_name FROM specialisations WHERE specialisation_prof_id =".$profID);
     $result = $con->query($sql);

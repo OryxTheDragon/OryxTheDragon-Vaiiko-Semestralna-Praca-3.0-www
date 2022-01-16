@@ -23,12 +23,14 @@ class App
         }
         // TODO: Implementacia pomocov "PREFERENCE"
         if (isset($_REQUEST["vytvoritCharakter"])) {
-            $this->storage->createCharacter(new Character($_REQUEST['nickname'], $_REQUEST['profession'], $_REQUEST['specialisation'], $_REQUEST['race']));
+            $this->storage->createCharacter(new Character($this->storage->getUserID(),$_REQUEST['nickname'], $_REQUEST['profession'], $_REQUEST['specialisation'], $_REQUEST['race'], $_REQUEST['gender']));
         }
         if (isset($_REQUEST["prihlasit"])) {
             $this->storage->getAuthentication($_REQUEST['username'], $_REQUEST['password']);
         }
-
+        if (isset($_REQUEST["getUserId"])) {
+            $this->storage->getUserID();
+        }
         if (isset($_REQUEST["odhlasit"])) {
             Authenticator::logout();
         }
@@ -43,7 +45,12 @@ class App
         if (isset($_REQUEST["zmenitHeslo"])) {
             $this->storage->updatePassword($this->encryptPassword($_REQUEST['oldPassword']), $this->encryptPassword($_REQUEST['newPassword']));
         }
-
+        if (isset($_REQUEST["zmazatCharakter"])) {
+            if (isset($_REQUEST['characterID'])){
+                $this->storage->deleteCharacter($_REQUEST['characterID']);
+            }
+            echo"unset request pole";
+        }
 
         if (isset($_REQUEST["listCharacters"])) {
             $this->storage->getUserCharacters();
