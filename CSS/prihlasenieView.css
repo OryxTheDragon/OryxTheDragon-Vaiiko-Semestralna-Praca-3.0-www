@@ -1,0 +1,16 @@
+body{
+    background-image: url("../Images/4.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+html{
+    height: 100%;
+}
+
+.container{
+    height: 100%;
+    background-color: rgba(15,15,15, 75%);
+}
+

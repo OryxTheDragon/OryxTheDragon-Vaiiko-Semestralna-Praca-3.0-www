@@ -1,0 +1,206 @@
+
+#Mesmer, #Chronomancer, #Mirage {
+    color: fuchsia;
+}
+
+#Guardian, #Dragonhunter, #Firebrand {
+    color: cyan;
+}
+
+#Necromancer, #Reaper, #Scourge {
+    color: darkgreen;
+}
+
+#Ranger, #Druid, #Soulbeast {
+    color: yellowgreen;
+}
+
+#Elementalist, #Tempest, #Weaver {
+    color: indianred;
+}
+
+#Warrior, #Berserker, #Spellbreaker {
+    color: #ff8c00;
+}
+
+#Thief, #Daredevil, #Deadeye {
+    color: darkred;
+}
+
+#Engineer, #Scrapper, #Holosmith {
+    color: #b5651d;
+}
+
+#Revenant, #Herald, #Renegare {
+    color: purple;
+}
+
+.Mesmer {
+    content: url("../Images/Spec icons/Mesmer.png");
+    height: auto;
+}
+
+.Chronomancer {
+    content: url("../Images/Spec icons/Chronomancer.png");
+    height: auto;
+}
+
+.Mirage {
+    content: url("../Images/Spec icons/Mirage.png");
+    height: auto;
+}
+
+.Guardian {
+    content: url("../Images/Spec icons/Guardian.png");
+    height: auto;
+}
+
+.Dragonhunter {
+    content: url("../Images/Spec icons/Dragonhunter.png");
+    height: auto;
+}
+
+.Firebrand {
+    content: url("../Images/Spec icons/Firebrand.png");
+    height: auto;
+}
+
+.Necromancer {
+    content: url("../Images/Spec icons/Necromancer.png");
+    height: auto;
+}
+
+.Reaper {
+    content: url("../Images/Spec icons/Reaper.png");
+    height: auto;
+}
+
+.Scourge {
+    content: url("../Images/Spec icons/Scourge.png");
+    height: auto;
+}
+
+.Ranger {
+    content: url("../Images/Spec icons/Ranger.png");
+    height: auto;
+}
+
+.Druid {
+    content: url("../Images/Spec icons/Druid.png");
+    height: auto;
+}
+
+.Soulbeast {
+    content: url("../Images/Spec icons/Soulbeast.png");
+    height: auto;
+}
+
+.Elementalist {
+    content: url("../Images/Spec icons/Elementalist.png");
+    height: auto
+}
+
+.Tempest {
+    content: url("../Images/Spec icons/Tempest.png");
+    height: auto;
+}
+
+.Weaver {
+    content: url("../Images/Spec icons/Weaver.png");
+    height: auto;
+}
+
+.Warrior {
+    content: url("../Images/Spec icons/Warrior.png");
+    height: auto;
+}
+
+.Berserker {
+    content: url("../Images/Spec icons/Berserker.png");
+    height: auto;
+}
+
+.Spellbreaker {
+    content: url("../Images/Spec icons/Spellbreaker.png");
+    height: auto;
+}
+
+.Thief {
+    content: url("../Images/Spec icons/Thief.png");
+    height: auto;
+}
+
+.Daredevil {
+    content: url("../Images/Spec icons/Daredevil.png");
+    height: auto;
+}
+
+.Deadeye {
+    content: url("../Images/Spec icons/Deadeye.png");
+    height: auto;
+}
+
+.Engineer {
+    content: url("../Images/Spec icons/Engineer.png");
+    height: auto;
+}
+
+.Scrapper {
+    content: url("../Images/Spec icons/Scrapper.png");
+    height: auto;
+}
+
+.Holosmith {
+    content: url("../Images/Spec icons/Holosmith.png");
+    height: auto;
+}
+
+.Revenant {
+    content: url("../Images/Spec icons/Revenant.png");
+    height: auto;
+}
+
+.Herald {
+    content: url("../Images/Spec icons/Herald.png");
+    height: auto;
+}
+
+.Renegade {
+    content: url("../Images/Spec icons/Renegade.png");
+    height: auto;
+}
+
+#Female {
+    color: lightcoral;
+}
+
+#Male {
+    color: lightskyblue;
+}
+
+#Non-Binary {
+    color: mediumpurple;
+}
+
+
+.Female {
+    content: url("../Images/Gender icons/Female.png");
+    height: auto;
+}
+
+.Male {
+    content: url("../Images/Gender icons/male.png");
+    height: auto;
+}
+
+.Non-Binary {
+    content: url("../Images/Gender icons/non-binary.png");
+    height: auto;
+}
+
+.GenderTableData{
+    height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
