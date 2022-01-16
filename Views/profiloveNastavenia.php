@@ -20,14 +20,15 @@ $app = new App();
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/nastavenieView.css">
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
-    <link rel="stylesheet" href="../CSS/IntermediateMode.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-    <div class="container">
-        <a class="navbar-brand" href="">Guild Wars 2 - Character Simulator</a>
-        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+    <div class="col-8 text-left">
+        <h2>Guild Wars 2 - Character Simulator</h2>
+    </div>
+    <div class="col-1">
             <ul class="navbar-nav">
                 <form method="redirectDomov">
                     <li class="nav-item">
@@ -38,47 +39,52 @@ $app = new App();
                 </form>
                 </li>
             </ul>
+    </div>
+    <div class="col-1"></div>
+</nav>
+<div class="container">
+    <nav class="navbar navbar-expand-sm justify-content-center">
+        <div class="col-2 text-center innerbox">
+            <h3>Zmena Hesla</h3>
+            <hr>
+            <form method="zmenitHeslo" class="username">
+                <label for="oldPassword"><h4>Staré heslo:</h4></label>
+                <input type="password" class="form-control mb-2" name="oldPassword" id="oldPassword"
+                       placeholder="Staré heslo">
+                <label for="newPassword"><h4>Nové heslo:</h4></label>
+                <input type="password" class="form-control mb-2" name="newPassword" id="newPassword"
+                       placeholder="Nové heslo">
+                <button class="btn btn-primary btn " type="submit" name="zmenitHeslo" value="zmenitHeslo">Zmeniť Heslo
+                </button>
+            </form>
         </div>
-    </div>
-</nav>
-<nav class="navbar  bg-dark navbar-dark justify-content-center">
-    <div class="col-2 text-center innerbox">
-        <h3>Zmena Hesla</h3>
-        <hr>
-        <form method="zmenitHeslo" class="username">
-            <label for="oldPassword"><h4>Staré heslo:</h4></label>
-            <input type="password" class="form-control mb-2" name="oldPassword" id="oldPassword"
-                   placeholder="Staré heslo">
-            <label for="newPassword"><h4>Nové heslo:</h4></label>
-            <input type="password" class="form-control mb-2" name="newPassword" id="newPassword"
-                   placeholder="Nové heslo">
-            <button class="btn btn-primary btn " type="submit" name="zmenitHeslo" value="zmenitHeslo">Zmeniť Heslo
-            </button>
-        </form>
-    </div>
 
-    <div class="col-2 text-center innerbox">
-        <h3>Zmena Hesla</h3>
-        <hr>
-        <form method="premenovat" class="username">
-            <label for="newUsername"><h4>Nové meno:</h4></label>
-            <br>
-            <br>
-            <input type="Text" class="form-control mb-2" id="newUsername" name="newUsername" placeholder="Nové Meno">
-            <br>
-            <button class="btn btn-primary btn " type="submit" name="premenovat" value="premenovat">Zmeniť Meno</button>
-        </form>
-    </div>
-</nav>
-<nav class="navbar  bg-dark navbar-dark justify-content-center">
+        <div class="col-2 text-center innerbox">
+            <h3>Zmena Hesla</h3>
+            <hr>
+            <form method="premenovat" class="username">
+                <label for="newUsername"><h4>Nové meno:</h4></label>
+                <br>
+                <br>
+                <input type="Text" class="form-control mb-2" id="newUsername" name="newUsername"
+                       placeholder="Nové Meno">
+                <br>
+                <button class="btn btn-primary btn " type="submit" name="premenovat" value="premenovat">Zmeniť Meno
+                </button>
+            </form>
+        </div>
+    </nav>
+    <nav class="navbar justify-content-center">
 
-<div class="col text-center">
-    <form method="zmazatUcet">
-        <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="zmazatUcet">
-            Zmazať Účet
-        </button>
-</form>
+        <div class="col text-center">
+            <form method="zmazatUcet">
+                <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="zmazatUcet">
+                    Zmazať Účet
+                </button>
+            </form>
+        </div>
+
+    </nav>
 </div>
-</nav>
 </body>
 </html>

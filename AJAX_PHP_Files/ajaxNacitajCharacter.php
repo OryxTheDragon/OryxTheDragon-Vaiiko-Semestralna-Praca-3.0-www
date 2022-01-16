@@ -14,15 +14,18 @@ $sql->execute();
 $result = $sql->get_result();
 
 echo "<table class='table table-dark'>
-        <thead class='thead-dark'>
+        <thead class='thead-light'>
             <tr>
-                <th>Character ID</th>
-                <th>User </th>
-                <th>Nickname </th>
-                <th>Profession </th>
-                <th>Specification </th>
-                <th>Race </th>
-                <th>Gender </th>
+                <th class='fluid'>Character ID</th>
+                <th class='fluid'>User </th>
+                <th class='fluid'>Nickname </th>
+                <th class='fluid'></th>
+                <th class='fluid'>Profession </th>
+                <th class='fluid'></th>
+                <th class='fluid'>Specification </th>
+                <th class='fluid'>Race </th>
+                <th class='fluid'></th>
+                <th class='fluid'>Gender</th>
             </tr>
         </thead>";
 $characterID = "";
@@ -43,7 +46,8 @@ while ($row = $result->fetch_assoc()) {
     $genderID = $row['character_gender_id'];
 }
 
-echo "<tr class='thead-light'>";
+
+echo "<tr>";
 
 echo "<td>#" . $characterID . "</td>";
 $_REQUEST["characterID"] = $characterID;
@@ -66,8 +70,10 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $profession = $row['profession_name'];
-    echo "<td class='.$profession.'>" . $profession . "</td>";
+    echo "<td class='image $profession'>.'N/A'.</td>";
+    echo "<td id='$profession'>" . $profession . "</td>";
 } else {
+    echo "<td>N/A</td>";
     echo "<td>N/A</td>";
 }
 
@@ -76,8 +82,10 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $specialisation = $row['specialisation_name'];
-    echo "<td class='.$specialisation.'>" . $specialisation . "</td>";
+    echo "<td class='image $specialisation'>.'N/A'.</td>";
+    echo "<td id='$specialisation'>".$specialisation."</td>";
 } else {
+    echo "<td>N/A</td>";
     echo "<td>N/A</td>";
 }
 
@@ -86,7 +94,7 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $race = $row['race_name'];
-    echo "<td class='.$race.'>" . $race . "</td>";
+    echo "<td class='image $race'>" . $race . "</td>";
 } else {
     echo "<td>N/A</td>";
 }
@@ -96,7 +104,8 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $gender = $row['gender_name'];
-    echo "<td class='.$gender.'>" . $gender . "</td>";
+    echo "<td class='image $gender'></td>";
+    echo "<td class='GenderTableData' id='$gender'>" . $gender . "</td>";
 } else {
     echo "<td>N/A</td>";
 }

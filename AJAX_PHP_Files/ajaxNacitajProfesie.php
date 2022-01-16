@@ -5,7 +5,7 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-    $sql = ("SELECT * FROM professions ORDER BY profession_id DESC");
+    $sql = ("SELECT * FROM professions ORDER BY profession_id ASC");
     $result = $con->query($sql);
     while ($row = mysqli_fetch_row($result)) {
         $profID = $row[0];

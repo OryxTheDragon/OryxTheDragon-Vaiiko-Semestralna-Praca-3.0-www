@@ -15,10 +15,3 @@ h4{
 h3{
     font-weight: bold;
 }
-
-.innerbox{
-    margin:10%;
-    min-width:25%;
-    border:rgb(40,40,40) solid 25px;
-    background-color: rgb(40,40,40);
-}

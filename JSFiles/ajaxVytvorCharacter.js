@@ -83,7 +83,7 @@
     }
 
     function vytvorNovyCharakter(){
-        if (!(Meno.length > 3)){
+        if (!(Meno.length > 2)){
             alert('Zadany nickname je prilis kratky!');
             return -2;
         }

@@ -28,16 +28,10 @@ if (!\Classes\Authenticator::isLogged()) {
     <script src="../JSFiles/ajaxVytvorCharacter.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
     <link rel="stylesheet" href="../JSFiles/ajaxVytvorCharacter.js">
-    <link rel="stylesheet" href="../CSS/IntermediateMode.css">
+    <link rel="stylesheet" href="../CSS/vytvaranieCharakteruView.css">
+    <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
 </head>
-<script>
-    UserID = "<?php echo Authenticator::getName(); ?>";
-    nacitajProfesie();
-    nacitajRasy();
-    nacitajPohlavia();
-</script>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
     <div class="col-8 text-left">
@@ -87,9 +81,11 @@ if (!\Classes\Authenticator::isLogged()) {
             </ul>
         </div>
     </div>
-</nav>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center text-center">
+    <div class="col-1 text-right"></div>
+</nav>
+<div class="container">
+<nav class="navbar navbar-expand-sm justify-content-center text-center">
     <form>
         <div>
             <label for="nickname">Nickname</label>
@@ -97,13 +93,13 @@ if (!\Classes\Authenticator::isLogged()) {
         </div>
     </form>
 </nav>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center text-center">
+<nav class="navbar navbar-expand-sm justify-content-center text-center">
     <div class="col-2 m-2">
         <form>
             <label for="profesie">Vyberte Profesiu</label>
             <select class="form-select" aria-label="Default select example" id="profesie"
                     onchange="zvolSiProfesiu(this.value),nacitajSpecializacie()">
-                <option selected>Elementalist</option>
+                <option selected>Mesmer</option>
             </select>
         </form>
     </div>
@@ -112,7 +108,7 @@ if (!\Classes\Authenticator::isLogged()) {
             <label for="specializacie">Vyberte Specializaciu</label>
             <select class="form-select" id="specializacie" aria-label="Default select example"
                     onchange="zvolSiSpecializaciu(this.value)">
-                <option selected>Specializacia</option>
+                <option selected>Mesmer</option>
             </select>
         </form>
     </div>
@@ -121,7 +117,7 @@ if (!\Classes\Authenticator::isLogged()) {
             <label for="rasy">Vyberte Rasu</label>
             <select class="form-select" id="rasy" aria-label="Default select example"
                     onchange="zvolSiRasu(this.value)">
-                <option selected>Asura</option>
+                <option selected>Human</option>
             </select>
         </form>
     </div>
@@ -135,11 +131,22 @@ if (!\Classes\Authenticator::isLogged()) {
         </form>
     </div>
 </nav>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center text-center">
+<nav class="navbar navbar-expand-sm justify-content-center text-center">
     <form>
         <button type="button" class="btn btn-primary" onclick="vytvorNovyCharakter()">Vytvoriť Charakter</button>
     </form>
 </nav>
-
+</div>
 </body>
+<script>
+    UserID = "<?php echo Authenticator::getName(); ?>";
+    nacitajProfesie();
+    zvolSiProfesiu(1);
+    nacitajSpecializacie();
+    zvolSiSpecializaciu(18);
+    nacitajRasy();
+    zvolSiRasu(1);
+    nacitajPohlavia();
+    zvolSiRasu(1);
+</script>
 </html>
