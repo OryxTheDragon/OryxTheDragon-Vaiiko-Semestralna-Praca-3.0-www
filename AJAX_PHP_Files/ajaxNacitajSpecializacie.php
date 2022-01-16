@@ -10,7 +10,7 @@ if (!$con) {
 
 
 if ($profID > 0 && $profID <= 9) {
-    $sql = ("SELECT specialisation_id,specialisation_name FROM specialisations WHERE specialisation_prof_id =".$profID);
+    $sql = ("SELECT specialisation_id,specialisation_name FROM specialisations WHERE specialisation_prof_id =".$profID." ORDER BY specialisation_id DESC ");
     $result = $con->query($sql);
     while ($row = mysqli_fetch_row($result)) {
         $specID = $row[0];

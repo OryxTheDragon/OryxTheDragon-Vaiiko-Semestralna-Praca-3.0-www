@@ -46,12 +46,8 @@ class App
             $this->storage->updatePassword($this->encryptPassword($_REQUEST['oldPassword']), $this->encryptPassword($_REQUEST['newPassword']));
         }
         if (isset($_REQUEST["zmazatCharakter"])) {
-            if (isset($_REQUEST['characterID'])){
-                $this->storage->deleteCharacter($_REQUEST['characterID']);
-            }
-            echo"unset request pole";
+            $this->storage->deleteCharacter($_REQUEST['characterID']);
         }
-
         if (isset($_REQUEST["listCharacters"])) {
             $this->storage->getUserCharacters();
         }

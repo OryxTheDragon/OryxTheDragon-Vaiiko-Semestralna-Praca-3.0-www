@@ -66,7 +66,7 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $profession = $row['profession_name'];
-    echo "<td>" . $profession . "</td>";
+    echo "<td class='.$profession.'>" . $profession . "</td>";
 } else {
     echo "<td>N/A</td>";
 }
@@ -76,7 +76,7 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $specialisation = $row['specialisation_name'];
-    echo "<td>" . $specialisation . "</td>";
+    echo "<td class='.$specialisation.'>" . $specialisation . "</td>";
 } else {
     echo "<td>N/A</td>";
 }
@@ -86,7 +86,7 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $race = $row['race_name'];
-    echo "<td>" . $race . "</td>";
+    echo "<td class='.$race.'>" . $race . "</td>";
 } else {
     echo "<td>N/A</td>";
 }
@@ -96,7 +96,7 @@ $result = $con->query($sql);
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $gender = $row['gender_name'];
-    echo "<td>" . $gender . "</td>";
+    echo "<td class='.$gender.'>" . $gender . "</td>";
 } else {
     echo "<td>N/A</td>";
 }

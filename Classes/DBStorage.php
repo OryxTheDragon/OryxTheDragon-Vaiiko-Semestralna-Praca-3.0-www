@@ -180,15 +180,19 @@ class DBStorage implements IStorage
 
     public function getUserID()
     {
-        $result = -1;
-        $sql = ("SELECT id FROM users WHERE username = " . '"' . Authenticator::getName() . '")');
-        $dbResult = $this->db->query($sql);
-        if ($dbResult->num_rows > 0) {
-            while ($record = $dbResult->fetch_assoc()) {
-                $result = $record['id'];
+        $userID = 0;
+        $user = Authenticator::getName();
+        $sql = $this->db->prepare("SELECT id FROM users WHERE username = ?");
+        $sql->bind_param('s',$user);
+        $sql->execute();
+        $result = $sql->get_result();
+
+        if ($result->num_rows > 0) {
+            if($record = $result->fetch_assoc()) {
+                $userID = $record['id'];
             }
         }
-        return $result;
+        return $userID;
     }
 
     //TODO asi este nefunguje, treba otestovat.
@@ -209,46 +213,46 @@ class DBStorage implements IStorage
         return $result;
     }
 
-//    public function createCharacter(Character $character)
-//    {
-//        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
-//        $result = $this->db->query($sql);
-//        $characterUserID = $result['user_id'];
-//        $result->free_result();
-//
-//        if (!$this->validateNickname($character->getNickname())){
-//            return -2;
-//        }
-//        $characterNickname = $character->getNickname();
-//
-//        if (!$this->validateProfession($character->getCharacterprofId())){
-//            return -2;
-//        }
-//
-//        $characterProfession = $character->getCharacterprofId();
-//
-//        if (!$this->validateSpecialisation($characterProfession,$character->getCharacterSpecId())){
-//            return -2;
-//        }
-//        $characterSpecialisation = $character->getCharacterSpecId();
-//
-//        if (!$this->validateRace($character->getCharacterRaceId())){
-//            return -2;
-//        }
-//        $characterRace = $character->getCharacterRaceId();
-//
-//        if (!$this->validateGender($character->getCharacterGenderId())){
-//            return -2;
-//        }
-//        $characterGender = $character->getCharacterGenderId();
-//
-//        $stmt = $this->db->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
-//        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
-//        $stmt->execute();
-//        $this->checkDBErrors();
-//
-//        echo '<script>alert("Character uspesne vytvoreny.")</script>';
-//    }
+    public function createCharacter(Character $character)
+    {
+        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
+        $result = $this->db->query($sql);
+        $characterUserID = $result['user_id'];
+        $result->free_result();
+
+        if (!$this->validateNickname($character->getNickname())){
+            return -2;
+        }
+        $characterNickname = $character->getNickname();
+
+        if (!$this->validateProfession($character->getCharacterprofId())){
+            return -2;
+        }
+
+        $characterProfession = $character->getCharacterprofId();
+
+        if (!$this->validateSpecialisation($characterProfession,$character->getCharacterSpecId())){
+            return -2;
+        }
+        $characterSpecialisation = $character->getCharacterSpecId();
+
+        if (!$this->validateRace($character->getCharacterRaceId())){
+            return -2;
+        }
+        $characterRace = $character->getCharacterRaceId();
+
+        if (!$this->validateGender($character->getCharacterGenderId())){
+            return -2;
+        }
+        $characterGender = $character->getCharacterGenderId();
+
+        $stmt = $this->db->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+        $stmt->execute();
+        $this->checkDBErrors();
+
+        echo '<script>alert("Character uspesne vytvoreny.")</script>';
+    }
 
 
     public function deleteCharacter($characterID)

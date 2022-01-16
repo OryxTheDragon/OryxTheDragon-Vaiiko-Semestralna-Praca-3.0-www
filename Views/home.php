@@ -27,6 +27,7 @@ $app = new App();
     <script src="../JSFiles/ajaxNacitatCharacter.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
+    <link rel="stylesheet" href="../CSS/homeView.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">

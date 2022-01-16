@@ -1,10 +1,10 @@
 
     var UserID;
     var Meno;
-    var Professia;
-    var Specializacia
-    var Rasa;
-    var Pohlavie;
+    var Professia = 1;
+    var Specializacia = 1;
+    var Rasa = 1;
+    var Pohlavie = 1;
 
     function zvolSiProfesiu(profesia){
     Professia =  profesia;
@@ -91,7 +91,6 @@
             alert('Zadany nickname je prilis dlhy!');
             return -2;
         }
-        //TODO treba zavolat zmenu profesie este po nacitani z DB.
         if (!(Professia > 0 && Professia <= 9)){
             alert('Zle zadana profesia!');
             return -2;
@@ -113,6 +112,7 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if (this.readyState===4 && this.status===200) {
+                window.location.replace("../Views/home.php");
                 alert("Charakter uspesne vytvoreny.");
                 return true;
             }

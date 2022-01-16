@@ -21,6 +21,7 @@ $app = new App();
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
+    <link rel="stylesheet" href="../CSS/IntermediateMode.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
@@ -57,9 +58,6 @@ $app = new App();
     </div>
 
     <div class="col-2 text-center innerbox">
-    <?php
-    //TODO pridat este cierne stvorce na columy.
-    ?>
         <h3>Zmena Hesla</h3>
         <hr>
         <form method="premenovat" class="username">

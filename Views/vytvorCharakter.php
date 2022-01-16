@@ -30,6 +30,7 @@ if (!\Classes\Authenticator::isLogged()) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
     <link rel="stylesheet" href="../JSFiles/ajaxVytvorCharacter.js">
+    <link rel="stylesheet" href="../CSS/IntermediateMode.css">
 </head>
 <script>
     UserID = "<?php echo Authenticator::getName(); ?>";

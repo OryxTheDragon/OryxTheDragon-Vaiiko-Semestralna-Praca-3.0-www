@@ -5,7 +5,7 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$sql = ("SELECT * FROM races");
+$sql = ("SELECT * FROM races ORDER BY race_id DESC");
 $result = $con->query($sql);
 while ($row = mysqli_fetch_row($result)) {
     $raceID = $row[0];
