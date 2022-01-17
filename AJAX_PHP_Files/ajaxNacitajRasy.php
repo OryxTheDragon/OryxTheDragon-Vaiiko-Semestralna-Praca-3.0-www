@@ -4,9 +4,7 @@ $con = mysqli_connect('localhost', 'root', 'dtb456', 'databaza');
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
-
-$sql = ("SELECT * FROM races ORDER BY race_id ASC");
-$result = $con->query($sql);
+$result = $con->query("SELECT * FROM races ORDER BY race_id ASC");
 while ($row = mysqli_fetch_row($result)) {
     $raceID = $row[0];
     $raceName = $row[1];

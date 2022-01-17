@@ -12,6 +12,7 @@ $sql = $con->prepare("SELECT * FROM characters WHERE nickname = ? ");
 $sql->bind_param("s", $charNickname);
 $sql->execute();
 $result = $sql->get_result();
+
 echo "<div class='container' id='ZobrazCharakterContainer'>";
 echo "<table class='table table-dark'  id='tableList' >
         <thead class='thead-light'>
@@ -28,6 +29,7 @@ echo "<table class='table table-dark'  id='tableList' >
                 <th class='fluid'>Gender</th>
             </tr>
         </thead>";
+
 $characterID = "";
 $userID = "";
 $nickname = "";

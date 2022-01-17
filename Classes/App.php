@@ -30,11 +30,9 @@ class App
         if (isset($_POST["zmazatUcet"])) {
             $this->storage->deleteUser();
         }
-
         if (isset($_POST["premenovat"])) {
             $this->storage->updateUsername($_POST['newUsername']);
         }
-
         if (isset($_POST["zmenitHeslo"])) {
             $this->storage->updatePassword($this->encryptPassword($_POST['oldPassword']), $this->encryptPassword($_POST['newPassword']));
         }
@@ -42,8 +40,18 @@ class App
             $this->storage->deleteCharacter($_POST['characterID']);
         }
         if (isset($_POST["premenovatCharakter"])) {
-            $this->storage->renameCharacter($_POST['characterID'],$_POST['newCharacterName']);
+            $this->storage->updateSpecialisationName($_POST['specialisationID'],$_POST['newSpecialisationName']);
         }
+        if (isset($_POST["premenovatProfesiu"])) {
+            $this->storage->updateProfessionName($_POST['professionID'],$_POST['newProfessionName']);
+        }
+        if (isset($_POST["premenovatRasu"])) {
+            $this->storage->updateRaceName($_POST['raceID'],$_POST['newRaceName']);
+        }
+        if (isset($_POST["premenovatPohlavie"])) {
+            $this->storage->updateGenderName($_POST['genderID'],$_POST['newGenderName']);
+        }
+
 
         /** GET metody*/
         if (isset($_GET["prihlasit"])) {
@@ -55,9 +63,20 @@ class App
         if (isset($_GET["odhlasit"])) {
             Authenticator::logout();
         }
-        if (isset($_GET["listCharacters"])) {
-            $this->storage->getUserCharacters();
+        if (isset($_GET["getGender"])) {
+            $this->storage->getGender($_GET["genderID"]);
         }
+        if (isset($_GET["getRasu"])) {
+            $this->storage->getRace($_GET["raceID"]);
+        }
+        if (isset($_GET["getSpecializaciu"])) {
+            $this->storage->getSpecialisation($_GET["specialisationID"]);
+        }
+        if (isset($_GET["getProfesiu"])) {
+            $this->storage->getProfession($_GET["professionID"]);
+        }
+
+
 
         /** Redirekty */
         if (isset($_GET["redirectDomov"])) {

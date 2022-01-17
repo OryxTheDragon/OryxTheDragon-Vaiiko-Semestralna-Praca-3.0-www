@@ -4,9 +4,7 @@ $con = mysqli_connect('localhost', 'root', 'dtb456', 'databaza');
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
-
-    $sql = ("SELECT * FROM professions ORDER BY profession_id ASC");
-    $result = $con->query($sql);
+$result = $con->query("SELECT * FROM professions ORDER BY profession_id ASC");
     while ($row = mysqli_fetch_row($result)) {
         $profID = $row[0];
         $profName = $row[1];

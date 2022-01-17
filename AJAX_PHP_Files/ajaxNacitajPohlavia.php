@@ -5,8 +5,7 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-$sql = ("SELECT * FROM genders ORDER BY gender_id ASC");
-$result = $con->query($sql);
+$result = $con->query("SELECT * FROM genders ORDER BY gender_id ASC");
 while ($row = mysqli_fetch_row($result)) {
     $genderID = $row[0];
     $genderName = $row[1];

@@ -265,8 +265,124 @@ class DBStorage implements IStorage
         return false;
     }
 
-    /*
-     *   Validacia zo strany servra.
+
+    /**
+     *      2/4 CRUD Operácie nad vedľajšími tabuľkami.
+     */
+    public function getSpecialisation($specialisationID){
+        $specInfo[] = "";
+        $this->validateSpecialisation($specialisationID);
+        $sql = $this->db->prepare("SELECT * FROM specialisations ORDER BY specialisation_id ASC");
+        $sql->bind_param('s',$specialisationID);
+        $sql->execute();
+        $result = $sql->get_result();
+
+            while ($row = mysqli_fetch_row($result)) {
+                $specInfo[0] = $row[0];
+                $specInfo[1] = $row[1];
+                $specInfo[2] = $row[2];
+            }
+        $result->free_result();
+        return  $specInfo;
+        }
+
+    public function updateSpecialisationName($specialisationID,$newSpecialisationName){
+        $this->validateSpecialisation($specialisationID);
+        $sql = $this->db->prepare("UPDATE specialisations SET specialisation_name = ? WHERE specialisations_id = ?");
+        $sql->bind_param('ss',$newSpecialisationName,$specialisationID);
+        $sql->execute();
+        if ($sql->execute()){
+            echo "<script>alert('Zmena nazvu specializacie prebehla uspesne.')</script>";
+            return true;
+        }
+        echo "<script>alert('Zmena nazvu specializacie prebehla neuspesne.')</script>";
+        return false;
+    }
+
+
+    public function getProfession($professionID){
+        $profInfo[] = "";
+        $this->validateProfession($professionID);
+        $sql = $this->db->prepare("SELECT * FROM professions WHERE profession_id = ?");
+        $sql->bind_param('s',$professionID);
+        $sql->execute();
+        $result = $sql->get_result();
+        while ($row = mysqli_fetch_row($result)) {
+            $profInfo[0] = $row[0];
+            $profInfo[1] = $row[1];
+        }
+        $result->free_result();
+        return  $profInfo;
+    }
+
+    public function updateProfessionName($professionID,$newProfessionName){
+        $this->validateProfession($professionID);
+        $sql = $this->db->prepare("UPDATE professions SET profession_name = ? WHERE profession_id = ?");
+        $sql->bind_param('ss',$newProfessionName,$professionID);
+        $sql->execute();
+        if ($sql->execute()){
+            echo "<script>alert('Zmena nazvu profesie prebehla uspesne')</script>";
+            return true;
+        }
+        echo "<script>alert('Zmena nazvu profesie prebehla neuspesne')</script>";
+        return false;
+    }
+
+    public function getRace($raceID){
+        $raceInfo[] = "";
+        $this->validateRace($raceID);
+        $sql = $this->db->prepare("SELECT * FROM races WHERE race_id = ?");
+        $sql->bind_param('s',$raceID);
+        $sql->execute();
+        $result = $sql->get_result();
+        while ($row = mysqli_fetch_row($result)) {
+            $raceInfo[0] = $row[0];
+            $raceInfo[1] = $row[1];
+        }
+        $result->free_result();
+        return  $raceInfo;
+    }
+    public function updateRaceName($raceID,$newRaceName){
+        $this->validateRace($raceID);
+        $sql = $this->db->prepare("UPDATE races SET race_name = ? WHERE race_id = ?");
+        $sql->bind_param('ss',$newRaceName,$raceID);
+        $sql->execute();
+        if ($sql->execute()){
+            echo "<script>alert('Zmena nazvu rasy prebehla uspesne.')</script>";
+            return true;
+        }
+        echo "<script>alert('Zmena nazvu rasy prebehla neuspesne.')</script>";
+        return false;
+    }
+    public function getGender($genderID) {
+        $genderInfo[] = "";
+        $this->validateGender($genderID);
+        $sql = $this->db->prepare("SELECT * FROM genders WHERE gender_id = ?");
+        $sql->bind_param('s',$genderID);
+        $sql->execute();
+        $result = $sql->get_result();
+        while ($row = mysqli_fetch_row($result)) {
+            $genderInfo[0] = $row[0];
+            $genderInfo[1] = $row[1];
+        }
+        $result->free_result();
+        return  $genderInfo;
+    }
+    public function updateGenderName($genderID,$newGenderName){
+        $this->validateGender($genderID);
+        $sql = $this->db->prepare("UPDATE genders SET gender_name = ? WHERE gender_id = ?");
+        $sql->bind_param('ss',$newGenderName,$genderID);
+        $sql->execute();
+        if ($sql->execute()){
+            echo "<script>alert('Zmena nazvu pohlavia prebehla uspesne.')</script>";
+            return true;
+        }
+        echo "<script>alert('Zmena nazvu pohlavia prebehla uspesne.')</script>";
+        return false;
+    }
+
+    /**
+     *      Validacia zo strany servra.
      * */
     private function validateUsername(string $getUsername)
     {
