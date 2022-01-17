@@ -41,43 +41,43 @@ if (!\Classes\Authenticator::isLogged()) {
         <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <?php if (Authenticator::isLogged()) { ?>
-                    <form method="odhlasit">
-                        <li class="nav-item p-1">
+                    <li class="nav-item p-1">
+                        <form method="get">
+                            <button class="btn" type="submit" name="redirectNastavenia"
+                                    value="redirectNastavenia"><?php echo(Authenticator::getName()) ?>
+                            </button>
+                        </form>
+                    </li>
+                    <li class="nav-item p-1">
+                        <form method="get">
                             <button class="btn btn-primary" type="submit" name="odhlasit" value="odhlasit">
                                 Odhlasit
                             </button>
-                        </li>
-                    </form>
-                    <form method="redirectNastavenia">
-                        <li class="nav-item p-1">
-                            <button class="btn btn-secondary" type="submit" name="redirectNastavenia"
-                                    value="redirectNastavenia">Nastavenia
-                            </button>
-                        </li>
-                    </form>
+                        </form>
+                    </li>
                 <?php } else { ?>
-                    <form method="redirectPrihlasenie">
-                        <li class="nav-item p-1">
+                    <li class="nav-item p-1">
+                        <form method="get">
                             <button class="btn btn-primary" type="submit" name="redirectPrihlasenie"
                                     value="redirectPrihlasenie">Prihlasit
                             </button>
-                        </li>
-                    </form>
-                    <form method="redirectRegistracia">
+                        </form>
+                    </li>
                         <li class="nav-item p-1">
+                            <form method="get">
                             <button class="btn btn-secondary" type="submit" name="redirectRegistracia"
                                     value="redirectRegistracia">Registrovat
                             </button>
+                            </form>
                         </li>
-                    </form>
                 <?php } ?>
-                <form method="Post">
-                    <li class="nav-item p-1">
+                <li class="nav-item p-1">
+                    <form method="get">
                         <button class="btn btn-secondary" type="submit" name="redirectDomov" value="redirectDomov">
                             Domov
                         </button>
-                    </li>
-                </form>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
@@ -85,57 +85,57 @@ if (!\Classes\Authenticator::isLogged()) {
     <div class="col-1 text-right"></div>
 </nav>
 <div class="container">
-<nav class="navbar navbar-expand-sm justify-content-center text-center">
-    <form>
-        <div>
-            <label for="nickname">Nickname</label>
-            <input class="form-control" id="nickname" placeholder="Zadaj Nickname" oninput="zvolSiMeno(this.value)">
+    <nav class="navbar navbar-expand-sm justify-content-center text-center">
+        <form>
+            <div>
+                <label for="nickname">Nickname</label>
+                <input class="form-control" id="nickname" placeholder="Zadaj Nickname" oninput="zvolSiMeno(this.value)">
+            </div>
+        </form>
+    </nav>
+    <nav class="navbar navbar-expand-sm justify-content-center text-center">
+        <div class="col-2 m-2">
+            <form>
+                <label for="profesie">Vyberte Profesiu</label>
+                <select class="form-select" aria-label="Default select example" id="profesie"
+                        onchange="zvolSiProfesiu(this.value),nacitajSpecializacie()">
+                    <option selected>Mesmer</option>
+                </select>
+            </form>
         </div>
-    </form>
-</nav>
-<nav class="navbar navbar-expand-sm justify-content-center text-center">
-    <div class="col-2 m-2">
-        <form>
-            <label for="profesie">Vyberte Profesiu</label>
-            <select class="form-select" aria-label="Default select example" id="profesie"
-                    onchange="zvolSiProfesiu(this.value),nacitajSpecializacie()">
-                <option selected>Mesmer</option>
-            </select>
+        <div class="col-2 m-2">
+            <form>
+                <label for="specializacie">Vyberte Specializaciu</label>
+                <select class="form-select" id="specializacie" aria-label="Default select example"
+                        onchange="zvolSiSpecializaciu(this.value)">
+                    <option selected>Mesmer</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-2 m-2">
+            <form>
+                <label for="rasy">Vyberte Rasu</label>
+                <select class="form-select" id="rasy" aria-label="Default select example"
+                        onchange="zvolSiRasu(this.value)">
+                    <option selected>Human</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-2 m-2">
+            <form>
+                <label for="pohlavia">Vyberte Pohlavie</label>
+                <select class="form-select" id="pohlavia" aria-label="Default select example"
+                        onchange="zvolSiPohlavie(this.value)">
+                    <option selected>Female</option>
+                </select>
+            </form>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-sm justify-content-center text-center">
+        <form method="post">
+            <button type="button" class="btn btn-primary" onclick="vytvorNovyCharakter()">Vytvoriť Charakter</button>
         </form>
-    </div>
-    <div class="col-2 m-2">
-        <form>
-            <label for="specializacie">Vyberte Specializaciu</label>
-            <select class="form-select" id="specializacie" aria-label="Default select example"
-                    onchange="zvolSiSpecializaciu(this.value)">
-                <option selected>Mesmer</option>
-            </select>
-        </form>
-    </div>
-    <div class="col-2 m-2">
-        <form>
-            <label for="rasy">Vyberte Rasu</label>
-            <select class="form-select" id="rasy" aria-label="Default select example"
-                    onchange="zvolSiRasu(this.value)">
-                <option selected>Human</option>
-            </select>
-        </form>
-    </div>
-    <div class="col-2 m-2">
-        <form>
-            <label for="pohlavia">Vyberte Pohlavie</label>
-            <select class="form-select" id="pohlavia" aria-label="Default select example"
-                    onchange="zvolSiPohlavie(this.value)">
-                <option selected>Female</option>
-            </select>
-        </form>
-    </div>
-</nav>
-<nav class="navbar navbar-expand-sm justify-content-center text-center">
-    <form>
-        <button type="button" class="btn btn-primary" onclick="vytvorNovyCharakter()">Vytvoriť Charakter</button>
-    </form>
-</nav>
+    </nav>
 </div>
 </body>
 <script>

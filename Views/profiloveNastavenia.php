@@ -1,6 +1,7 @@
 <?php
 
 use Classes\App;
+use Classes\Authenticator;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -29,62 +30,99 @@ $app = new App();
         <h2>Guild Wars 2 - Character Simulator</h2>
     </div>
     <div class="col-1">
-            <ul class="navbar-nav">
-                <form method="redirectDomov">
-                    <li class="nav-item">
-                        <button class="btn btn-secondary btn" type="submit" name="redirectDomov" value="redirectDomov">
-                            Domov
+        <ul class="navbar-nav">
+            <?php if (Authenticator::isLogged()) { ?>
+                <li class="nav-item m-1 ">
+                    <form method="get">
+                        <button class="btn btn-primary" type="submit" name="odhlasit" value="odhlasit">
+                            Odhlasit
                         </button>
-                    </li>
-                </form>
+                    </form>
                 </li>
-            </ul>
+            <?php } ?>
+
+            <li class="nav-item m-1 ">
+                <form method="get">
+                    <button class="btn btn-secondary btn" type="submit" name="redirectDomov" value="redirectDomov">
+                        Domov
+                    </button>
+                </form>
+            </li>
+        </ul>
     </div>
     <div class="col-1"></div>
 </nav>
 <div class="container">
-    <nav class="navbar navbar-expand-sm justify-content-center">
-        <div class="col-2 text-center innerbox">
-            <h3>Zmena Hesla</h3>
-            <hr>
-            <form method="zmenitHeslo" class="username">
-                <label for="oldPassword"><h4>Staré heslo:</h4></label>
-                <input type="password" class="form-control mb-2" name="oldPassword" id="oldPassword"
-                       placeholder="Staré heslo">
-                <label for="newPassword"><h4>Nové heslo:</h4></label>
-                <input type="password" class="form-control mb-2" name="newPassword" id="newPassword"
-                       placeholder="Nové heslo">
-                <button class="btn btn-primary btn " type="submit" name="zmenitHeslo" value="zmenitHeslo">Zmeniť Heslo
+
+    <?php if (Authenticator::isLogged()) { ?>
+        <nav class="navbar navbar-expand-sm justify-content-center">
+            <div class="col-2 text-center innerbox">
+                <h2>Zmena Hesla</h2>
+                <hr>
+                <form method="post" class="username">
+                    <label for="oldPassword">Staré heslo:</label>
+                    <input type="password" class="form-control mb-2" name="oldPassword" id="oldPassword"
+                           placeholder="Staré heslo">
+                    <label for="newPassword">Nové heslo:</label>
+                    <input type="password" class="form-control mb-2" name="newPassword" id="newPassword"
+                           placeholder="Nové heslo">
+                    <button class="btn btn-primary btn " type="submit" name="zmenitHeslo" value="zmenitHeslo">Zmeniť
+                        Heslo
+                    </button>
+                </form>
+            </div>
+
+            <div class="col-2 text-center innerbox">
+                <h2>Zmena Mena</h2>
+                <hr>
+                <form method="post" class="username">
+                    <label for="newUsername">Nové meno:</label>
+                    <input type="Text" class="form-control mb-2" id="newUsername" name="newUsername"
+                           placeholder="Nové Meno">
+                    <br>
+                    <button class="btn btn-primary btn " type="submit" name="premenovat" value="premenovat">Zmeniť Meno
+                    </button>
+                </form>
+            </div>
+        </nav>
+        <nav class="navbar justify-content-center">
+
+            <div class="col text-center">
+                <form method="post">
+                    <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="zmazatUcet"
+                            onclick="function areYouSure() {
+                                if (confirm('Ste si isty, ze chcete zmazat vas ucet?')){
+                                    alert('Odsuhlasilo sa mazanie.');
+                                    return true;
+                                } else{
+                                    alert('Neodsuhlasilo sa mazanie.');
+                                    return false
+                                }
+                                }
+                            areYouSure()">
+                        Zmazať Účet
+                    </button>
+                </form>
+            </div>
+
+        </nav>
+    <?php } else { ?>
+        <nav class="navbar justify-content-center">
+
+            <div class="col text-center">
+                <h3>Prosím, prihláste sa.</h3>
+            </div>
+
+
+        </nav>
+        <nav class="navbar justify-content-center">
+            <form method="get">
+                <button class="btn btn-primary " type="submit" name="redirectPrihlasenie"
+                        value="redirectPrihlasenie">Prihlasit
                 </button>
             </form>
-        </div>
-
-        <div class="col-2 text-center innerbox">
-            <h3>Zmena Hesla</h3>
-            <hr>
-            <form method="premenovat" class="username">
-                <label for="newUsername"><h4>Nové meno:</h4></label>
-                <br>
-                <br>
-                <input type="Text" class="form-control mb-2" id="newUsername" name="newUsername"
-                       placeholder="Nové Meno">
-                <br>
-                <button class="btn btn-primary btn " type="submit" name="premenovat" value="premenovat">Zmeniť Meno
-                </button>
-            </form>
-        </div>
-    </nav>
-    <nav class="navbar justify-content-center">
-
-        <div class="col text-center">
-            <form method="zmazatUcet">
-                <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="zmazatUcet">
-                    Zmazať Účet
-                </button>
-            </form>
-        </div>
-
-    </nav>
+        </nav>
+    <?php } ?>
 </div>
 </body>
 </html>

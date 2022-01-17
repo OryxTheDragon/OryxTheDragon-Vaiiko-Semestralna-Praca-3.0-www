@@ -54,7 +54,6 @@ class DBStorage implements IStorage
 
     public function deleteUser()
     {
-        //TODO ste si isty ze chcete deletnut usera ? asi checkbox v html
         if (Authenticator::isLogged()) {
             $name = Authenticator::getName();
             $stmt = $this->db->prepare("DELETE FROM users WHERE username = ? ");
@@ -101,20 +100,21 @@ class DBStorage implements IStorage
         if (Authenticator::isLogged()) {
             $username = Authenticator::getName();
             if (!$this->validateUsername($username)){
-                echo "<script>alert('Logged in user has a wrong username.')</script>";
+                echo "<script>alert('Prihlaseny pouzivatel ma nevyhovujuce meno.')</script>";
                 echo "<script>alert('How in the sweet guinea pig of Winnipeg have you managed this?.')</script>";
                 return -10;
             }
-            $query = ('SELECT password FROM users WHERE username = ' . '"' . $username . '"');
+            $query = ('SELECT password FROM users WHERE username = ?');
             $stmt = $this->db->prepare($query);
+            $stmt->bind_param('s',$username);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     if (password_verify($oldPassword, $row["password"])) {
-                        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE username = " . '"' . $username . '"');
+                        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE username = ?");
                         $passwordUpdate = password_hash($newPassword , PASSWORD_DEFAULT);
-                        $stmt->bind_param("s", $passwordUpdate);
+                        $stmt->bind_param("ss", $passwordUpdate,$username);
                         $stmt->execute();
                         $this->checkDBErrors();
                         echo '<script>alert("Heslo bolo uspesne zmenene.")</script>';
@@ -195,24 +195,6 @@ class DBStorage implements IStorage
         return $userID;
     }
 
-    //TODO asi este nefunguje, treba otestovat.
-    public function getSpecializacie($profesia)
-    {
-        $result = [];
-        $sql = $this->db->prepare("SELECT specialisation_name FROM specialisations WHERE specialisation_prof_id = ?");
-        $sql->bind_param('s', $profesia);
-        $sql->execute();
-        $dbResult = $sql->get_result();
-        $i = 0;
-        if ($dbResult->num_rows > 0) {
-            while ($record = $dbResult->fetch_assoc()) {
-                $result[$i] = $record["specialisation_name"];
-                $i++;
-            }
-        }
-        return $result;
-    }
-
     public function createCharacter(Character $character)
     {
         $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
@@ -254,6 +236,20 @@ class DBStorage implements IStorage
         echo '<script>alert("Character uspesne vytvoreny.")</script>';
     }
 
+    public function renameCharacter($characterID,$characterName)
+    {
+        $this->validateNickname($characterName);
+        $newCharacterName = $characterName;
+        $stmt = $this->db->prepare("UPDATE characters SET nickname = ? WHERE character_id = ? ");
+        $stmt->bind_param('ss',$newCharacterName,$characterID);
+        if ($stmt->execute()){
+            $this->checkDBErrors();
+            echo '<script>alert("Character uspesne premenovany.")</script>';
+            return true;
+        }
+        echo '<script>alert("Character sa nepodarilo premenovat.")</script>';
+        return false;
+    }
 
     public function deleteCharacter($characterID)
     {

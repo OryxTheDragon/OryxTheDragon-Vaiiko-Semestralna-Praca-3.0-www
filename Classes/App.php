@@ -18,57 +18,64 @@ class App
             $this->storage = new DBStorage();
         }
         /** Komunikacia s databazov */
-        if (isset($_REQUEST["registrovat"])) {
-            $this->storage->createUser(new User($_REQUEST['username'], ($_REQUEST['password'])));
-        }
-        // TODO: Implementacia pomocov "PREFERENCE"
-        if (isset($_REQUEST["vytvoritCharakter"])) {
-            $this->storage->createCharacter(new Character($this->storage->getUserID(),$_REQUEST['nickname'], $_REQUEST['profession'], $_REQUEST['specialisation'], $_REQUEST['race'], $_REQUEST['gender']));
-        }
-        if (isset($_REQUEST["prihlasit"])) {
-            $this->storage->getAuthentication($_REQUEST['username'], $_REQUEST['password']);
-        }
-        if (isset($_REQUEST["getUserId"])) {
-            $this->storage->getUserID();
-        }
-        if (isset($_REQUEST["odhlasit"])) {
-            Authenticator::logout();
-        }
 
-        if (isset($_REQUEST["zmazatUcet"])) {
+
+        /** POST metody*/
+        if (isset($_POST["registrovat"])) {
+            $this->storage->createUser(new User($_POST['username'], ($_POST['password'])));
+        }
+        if (isset($_POST["vytvoritCharakter"])) {
+            $this->storage->createCharacter(new Character($this->storage->getUserID(), $_POST['nickname'], $_POST['profession'], $_POST['specialisation'], $_POST['race'], $_POST['gender']));
+        }
+        if (isset($_POST["zmazatUcet"])) {
             $this->storage->deleteUser();
         }
 
-        if (isset($_REQUEST["premenovat"])) {
-            $this->storage->updateUsername($_REQUEST['newUsername']);
+        if (isset($_POST["premenovat"])) {
+            $this->storage->updateUsername($_POST['newUsername']);
         }
-        if (isset($_REQUEST["zmenitHeslo"])) {
-            $this->storage->updatePassword($this->encryptPassword($_REQUEST['oldPassword']), $this->encryptPassword($_REQUEST['newPassword']));
+
+        if (isset($_POST["zmenitHeslo"])) {
+            $this->storage->updatePassword($this->encryptPassword($_POST['oldPassword']), $this->encryptPassword($_POST['newPassword']));
         }
-        if (isset($_REQUEST["zmazatCharakter"])) {
-            $this->storage->deleteCharacter($_REQUEST['characterID']);
+        if (isset($_POST["zmazatCharakter"])) {
+            $this->storage->deleteCharacter($_POST['characterID']);
         }
-        if (isset($_REQUEST["listCharacters"])) {
+        if (isset($_POST["premenovatCharakter"])) {
+            $this->storage->renameCharacter($_POST['characterID'],$_POST['newCharacterName']);
+        }
+
+        /** GET metody*/
+        if (isset($_GET["prihlasit"])) {
+            $this->storage->getAuthentication($_GET['username'], $_GET['password']);
+        }
+        if (isset($_GET["getUserId"])) {
+            $this->storage->getUserID();
+        }
+        if (isset($_GET["odhlasit"])) {
+            Authenticator::logout();
+        }
+        if (isset($_GET["listCharacters"])) {
             $this->storage->getUserCharacters();
         }
 
         /** Redirekty */
-        if (isset($_REQUEST["redirectDomov"])) {
+        if (isset($_GET["redirectDomov"])) {
             Redirektor::navratDomov();
         }
-        if (isset($_REQUEST["redirectPrihlasenie"])) {
+        if (isset($_GET["redirectPrihlasenie"])) {
             Redirektor::prihlasenie();
         }
-        if (isset($_REQUEST["redirectRegistracia"])) {
+        if (isset($_GET["redirectRegistracia"])) {
             Redirektor::registracia();
         }
-        if (isset($_REQUEST["vytvoritCharakter"])) {
+        if (isset($_GET["vytvoritCharakter"])) {
             Redirektor::tvorbaCharakteru();
         }
-        if (isset($_REQUEST["redirectTvorbaCharactera"])) {
+        if (isset($_GET["redirectTvorbaCharactera"])) {
             Redirektor::redirectTvorbaCharaktera();
         }
-        if (isset($_REQUEST["redirectNastavenia"])) {
+        if (isset($_GET["redirectNastavenia"])) {
             Redirektor::redirectNastavenia();
         }
     }
@@ -86,9 +93,5 @@ class App
     public function listCharacterData()
     {
         return $this->storage->getUserCharacters();
-    }
-    public function getSpecializacie(int $prof)
-    {
-        return $this->storage->getSpecializacie($prof);
     }
 }

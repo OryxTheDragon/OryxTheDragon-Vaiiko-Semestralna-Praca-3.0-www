@@ -78,24 +78,24 @@ $app = new App();
     <div class="col-1 text-center">
         <ul class="navbar-nav">
             <?php if (!Authenticator::isLogged()) { ?>
-                <form method="redirectPrihlasenie">
-                    <li class="nav-item">
-                        <button class="btn btn-secondary btn" type="submit" name="redirectPrihlasenie"
+                <li class="nav-item m-1 ">
+                    <form method="get">
+                        <button class="btn btn-primary btn" type="submit" name="redirectPrihlasenie"
                                 value="redirectPrihlasenie">Prihlasit
                         </button>
-                    </li>
-                </form>
+                    </form>
+                </li>
             <?php } ?>
-            <form method="redirectDomov">
-                <li class="nav-item">
-                    <button class="btn btn-secondary btn" type="submit" name="redirectDomov" value="redirectDomov">
+            <li class="nav-item m-1 ">
+                <form method="get">
+                    <button class="btn btn-secondary" type="submit" name="redirectDomov" value="redirectDomov">
                         Domov
                     </button>
-                </li>
-            </form>
+                </form>
+            </li>
         </ul>
     </div>
-        <div class="col-1"></div>
+    <div class="col-1"></div>
 </nav>
 
 <div class="container">
@@ -103,22 +103,21 @@ $app = new App();
         <nav class="navbar justify-content-center">
             <div class="row">
                 <div class="col-xs-2"></div>
-                <div class="col-xs-2 text-center">
-                    <form method="get" class="username" name="registracia" onsubmit="return validaciaRegistracie()">
-                        <label for="Username">Username:</label>
-                        <input type="Text" class="form-control" id="username" name="username"><br>
-                        <label for="Password">Password:</label>
+                <div class="col-xs-2 text-center innerbox">
+                    <form method="post" class="username" name="registracia" onsubmit="return validaciaRegistracie()">
+                        <label for="username">Meno:</label>
+                        <input type="Text" class="form-control" id="username" name="username"
+                               placeholder="Meno"><br>
+                        <label for="password">Heslo:</label>
                         <input class="mb-4 form-control" type="password" id="password" name="password"
-                               placeholder="Password">
-                        <form>
-                            <p><input type="checkbox" name="checkbox" value="check"/> Potvrdzujem, ze suhlasim s
-                                <script>makeLink()</script>
-                            </p>
-                            <button onclick="if(!this.form.checkbox.checked){alert('Najprv musite odsuhlasit privacy policy!');return false}"
-                                    class="btn btn-primary btn" type="submit" name="registrovat" value="registrovat">
-                                Registrovat
-                            </button>
-                        </form>
+                               placeholder="Heslo">
+                        <p><input type="checkbox" name="checkbox" value="check"/> Potvrdzujem, ze suhlasim s
+                            <script>makeLink()</script>
+                        </p>
+                        <button onclick="if(!this.form.checkbox.checked){alert('Najprv musite odsuhlasit privacy policy!');return false}"
+                                class="btn btn-primary btn" type="submit" name="registrovat" value="registrovat">
+                            Registrovat
+                        </button>
                     </form>
                 </div>
                 <div class="col-xs-2"></div>

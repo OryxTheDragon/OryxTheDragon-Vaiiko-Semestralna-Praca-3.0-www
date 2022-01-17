@@ -20,3 +20,8 @@ html{
     border:rgba(40,40,40,0%) solid 35px;
     background-color: rgba(40,40,40,75%);
 }
+
+label{
+    font-size: x-large;
+    font-weight: bold;
+}

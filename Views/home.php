@@ -31,63 +31,62 @@ $app = new App();
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm  bg-dark navbar-dark  justify-content-center">
-        <div class="col-8 text-left">
-            <h2>Guild Wars 2 - Character Simulator</h2>
-        </div>
-        <div class="col-1 text-center">
-            <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <?php if (Authenticator::isLogged()) { ?>
-                        <form method="odhlasit">
-                            <li class="nav-item p-1">
-                                <button class="btn btn-primary" type="submit" name="odhlasit" value="odhlasit">
-                                    Odhlasit
-                                </button>
-                            </li>
-                        </form>
-                        <form method="redirectNastavenia">
-                            <li class="nav-item p-1">
-                                <button class="btn btn-secondary" type="submit" name="redirectNastavenia"
-                                        value="redirectNastavenia">Nastavenia
-                                </button>
-                            </li>
-                        </form>
-                    <?php } else { ?>
-                        <form method="redirectPrihlasenie">
-                            <li class="nav-item p-1">
-                                <button class="btn btn-primary" type="submit" name="redirectPrihlasenie"
-                                        value="redirectPrihlasenie">Prihlasit
-                                </button>
-                            </li>
-                        </form>
-                        <form method="redirectRegistracia">
-                            <li class="nav-item p-1">
-                                <button class="btn btn-secondary" type="submit" name="redirectRegistracia"
-                                        value="redirectRegistracia">Registrovat
-                                </button>
-                            </li>
-                        </form>
-                    <?php } ?>
-                    <form method="redirectDomov">
-                        <li class="nav-item p-1">
-                            <button class="btn btn-secondary" type="submit" name="navratDomov" value="navratDomov">
-                                Domov
+<nav class="navbar navbar-expand-sm  bg-dark navbar-dark  justify-content-center">
+    <div class="col-8 text-left">
+        <h2>Guild Wars 2 - Character Simulator</h2>
+    </div>
+    <div class="col-1 text-center">
+        <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <?php if (Authenticator::isLogged()) { ?>
+                    <li class="nav-item p-1">
+                        <form method="get">
+                            <button class="btn login" type="submit" name="redirectNastavenia"
+                                    value="redirectNastavenia"><?php echo(Authenticator::getName()) ?>
                             </button>
-                        </li>
+                        </form>
+                    </li>
+                    <li class="nav-item p-1">
+                        <form method="get">
+                            <button class="btn btn-primary" type="submit" name="odhlasit" value="odhlasit">
+                                Odhlasit
+                            </button>
+                        </form>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item p-1">
+                        <form method="get">
+                            <button class="btn btn-primary" type="submit" name="redirectPrihlasenie"
+                                    value="redirectPrihlasenie">Prihlasit
+                            </button>
+                        </form>
+                    </li>
+                    <li class="nav-item p-1">
+                        <form method="get">
+                            <button class="btn btn-secondary btn-success" type="submit" name="redirectRegistracia"
+                                    value="redirectRegistracia">Registrovat
+                            </button>
+                        </form>
+                    </li>
+                <?php } ?>
+                <li class="nav-item p-1">
+                    <form method="get">
+                        <button class="btn btn-secondary" type="submit" name="navratDomov" value="navratDomov">
+                            Domov
+                        </button>
                     </form>
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
+    </div>
 
-    </nav>
-    <div class="container">
+</nav>
+<div class="container">
     <?php if (Authenticator::isLogged()) { ?>
     <nav class="navbar navbar-expand-sm  justify-content-center text-center">
-        <div class="col-2 User navbar-brand"><?php echo(Authenticator::getName()) ?> </div>
-
+        <div class="col-2 navbar-brand"></div>
         <div class="col-7"></div>
-        <form method="redirectTvorbaCharactera">
+        <form method="get">
             <div class="nav-item">
                 <button class="btn btn-secondary btn-success" type="submit" name="redirectTvorbaCharactera"
                 >Nový Charakter
@@ -96,23 +95,23 @@ $app = new App();
         </form>
     </nav>
     <nav class="navbar justify-content-center">
-            <div class="col-9 text-left"></div>
-            <div class="col-2 text-center">
-                Zvoľ si charakter
-                <form method="post">
-                    <select name="characters" onchange="showCharacterData(this.value)">
-                        <option>-none-</option>
-                        <?php
-                        /** @var Character $Character */
-                        if ($app->listCharacterData() != false) {
-                            foreach ($app->listCharacterData() as $Character) {
-                                echo "<option>" . $Character->getNickname() . "</option>";
-                            }
+        <div class="col-9 text-left"></div>
+        <div class="col-2 text-center">
+            Zvoľ si charakter
+            <form method="get">
+                <select class="form-select text-center" name="characters" onchange="showCharacterData(this.value)">
+                    <option>-none-</option>
+                    <?php
+                    /** @var Character $Character */
+                    if ($app->listCharacterData() != false) {
+                        foreach ($app->listCharacterData() as $Character) {
+                            echo "<option>" . $Character->getNickname() . "</option>";
                         }
-                        } ?>
-                    </select>
-                </form>
-            </div>
+                    }
+                    } ?>
+                </select>
+            </form>
+        </div>
     </nav>
     <nav class="navbar navbar-expand-sm justify-content-center ">
         <div class="col"></div>

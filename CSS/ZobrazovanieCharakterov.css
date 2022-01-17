@@ -185,16 +185,19 @@
 
 .Female {
     content: url("../Images/Gender icons/Female.png");
+    border-radius: 50%;
     height: auto;
 }
 
 .Male {
     content: url("../Images/Gender icons/male.png");
+    border-radius: 50%;
     height: auto;
 }
 
 .Non-Binary {
     content: url("../Images/Gender icons/non-binary.png");
+    border-radius: 50%;
     height: auto;
 }
 
@@ -202,5 +205,21 @@
     height: 30px;
     overflow: hidden;
     white-space: nowrap;
+}
+
+#tableList{
+
+    border-radius: 3%;
+    background-color: #212529;
+    border-color: #212529;
+}
+
+#ZobrazCharakterContainer{
+    border-radius: 3%;
+    background-color: #212529;
+}
+
+table{
+    border: 15px solid;
 }
 

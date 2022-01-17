@@ -21,16 +21,21 @@ $con = mysqli_connect('localhost', 'root', 'dtb456', 'databaza');
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
-$sql = ("SELECT id FROM users WHERE username = ".'"'.$username.'"');
-$dbResult = $con->query($sql);
+
+$sql = $con->prepare("SELECT id FROM users WHERE username = ? ");
+$sql->bind_param("s", $username);
+$sql->execute();
+$dbResult = $sql->get_result();
 if ($dbResult->num_rows > 0) {
     if($record = $dbResult->fetch_assoc()) {
         $characterUserID = $record['id'];
     }
 }
+$dbResult->free_result();
 
 $stmt = $con->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
 $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+
 if ($stmt->execute()){
     $this->checkDBErrors();
     return true;

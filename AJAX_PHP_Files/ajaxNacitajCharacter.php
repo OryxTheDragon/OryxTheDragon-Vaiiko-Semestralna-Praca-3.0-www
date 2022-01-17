@@ -12,8 +12,8 @@ $sql = $con->prepare("SELECT * FROM characters WHERE nickname = ? ");
 $sql->bind_param("s", $charNickname);
 $sql->execute();
 $result = $sql->get_result();
-
-echo "<table class='table table-dark'>
+echo "<div class='container' id='ZobrazCharakterContainer'>";
+echo "<table class='table table-dark'  id='tableList' >
         <thead class='thead-light'>
             <tr>
                 <th class='fluid'>Character ID</th>
@@ -50,23 +50,28 @@ while ($row = $result->fetch_assoc()) {
 echo "<tr>";
 
 echo "<td>#" . $characterID . "</td>";
-$_REQUEST["characterID"] = $characterID;
 
-$sql = ("SELECT username FROM users WHERE id =".$userID);
-$result = $con->query($sql);
+$sql = $con->prepare("SELECT username FROM users WHERE id = ? ");
+$sql->bind_param("s", $userID);
+$sql->execute();
+$result = $sql->get_result();
+
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $username = $row['username'];
-        echo "<td>" . $username . "</td>";
+    echo "<td>" . $username . "</td>";
 } else {
     echo "<td>N/A</td>";
 }
-
+$result = $sql->get_result();
 echo "<td>" . $nickname . "</td>";
 
 
-$sql = ("SELECT profession_name FROM professions WHERE profession_id =".$professionID);
-$result = $con->query($sql);
+$sql = $con->prepare("SELECT profession_name FROM professions WHERE profession_id = ? ");
+$sql->bind_param("s", $professionID);
+$sql->execute();
+$result = $sql->get_result();
+
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $profession = $row['profession_name'];
@@ -76,21 +81,28 @@ if ($result->num_rows > 0) {
     echo "<td>N/A</td>";
     echo "<td>N/A</td>";
 }
+$result->free_result();
 
-$sql = ("SELECT specialisation_name FROM specialisations WHERE specialisation_id =".$specialisationID);
-$result = $con->query($sql);
+
+$sql = $con->prepare("SELECT specialisation_name FROM specialisations WHERE specialisation_id = ? ");
+$sql->bind_param("s", $specialisationID);
+$sql->execute();
+$result = $sql->get_result();
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $specialisation = $row['specialisation_name'];
     echo "<td class='image $specialisation'>.'N/A'.</td>";
-    echo "<td id='$specialisation'>".$specialisation."</td>";
+    echo "<td id='$specialisation'>" . $specialisation . "</td>";
 } else {
     echo "<td>N/A</td>";
     echo "<td>N/A</td>";
 }
+$result->free_result();
 
-$sql = ("SELECT race_name FROM races WHERE race_id =".$raceID);
-$result = $con->query($sql);
+$sql = $con->prepare("SELECT race_name FROM races WHERE race_id = ? ");
+$sql->bind_param("s", $raceID);
+$sql->execute();
+$result = $sql->get_result();
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $race = $row['race_name'];
@@ -98,9 +110,13 @@ if ($result->num_rows > 0) {
 } else {
     echo "<td>N/A</td>";
 }
+$result->free_result();
 
-$sql = ("SELECT gender_name FROM genders WHERE gender_id =".$genderID);
-$result = $con->query($sql);
+$sql = $con->prepare("SELECT gender_name FROM genders WHERE gender_id = ? ");
+$sql->bind_param("s", $raceID);
+$sql->execute();
+$result = $sql->get_result();
+
 if ($result->num_rows > 0) {
     ($row = $result->fetch_assoc());
     $gender = $row['gender_name'];
@@ -109,15 +125,31 @@ if ($result->num_rows > 0) {
 } else {
     echo "<td>N/A</td>";
 }
+$result->free_result();
 
 echo "</tr>";
 
-echo "</table>";
-echo "<form method='Post'>
-                            <ul class='nav-item p-1' >
-                                <input type='text' name='characterID' style='display: none' value='".$characterID."'></input>
-                                <button class='btn btn-secondary btn-danger' type='submit' name='zmazatCharakter'>Zmazat Charakter
-                                </button>
-                            </ul>
-                        </form>";
+echo "</table>          
+                    <nav class='navbar navbar-expand-sm justify-content-center'>
+                        <ul class='navbar nav'>
+                            <li class='nav-item p-1'>
+                                <form method='Post'>
+                                    <input class='form-control mb-3 mr-3' type='text' name='newCharacterName'></input>
+                                    <input type='text' name='characterID' style='display: none' value='" . $characterID . "'></input>
+                                    <button class='btn btn-secondary btn-success' type='submit' name='premenovatCharakter'>Premenovat
+                                    </button>
+                                </form>
+                            </li>
+                            <li class='nav-item p-5'></li>
+                            <li class='nav-item p-1'>
+                                <form method='Post'>
+                                    <input type='text' name='characterID' style='display: none' value='" . $characterID . "'></input>
+                                    <button class='btn btn-secondary btn-danger' type='submit' name='zmazatCharakter'>Zmazat Charakter
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </nav>";
+
+echo "</div>";
 mysqli_close($con);

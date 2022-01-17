@@ -24,6 +24,10 @@ html{
     padding:5px;
 }
 
-table{
-    border: 30px solid;
+
+.login{
+    background: gold;
+    color:Black;
+    font-weight: bold;
+    font-family: "Gill Sans MT";
 }
