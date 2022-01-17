@@ -40,7 +40,13 @@ $app = new App();
                     </form>
                 </li>
             <?php } ?>
-
+            <li class="nav-item p-1">
+                <form method="get">
+                    <button class="btn btn-secondary btn-success" type="submit" name="redirectRegistracia"
+                            value="redirectRegistracia">Registrovat
+                    </button>
+                </form>
+            </li>
             <li class="nav-item m-1 ">
                 <form method="get">
                     <button class="btn btn-secondary btn" type="submit" name="redirectDomov" value="redirectDomov">

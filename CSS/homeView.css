@@ -1,33 +1,33 @@
-body{
+body {
     background-image: url("../Images/5.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
 }
 
-html{
+html {
     height: 100%;
 }
 
-.container{
+.container {
     height: 100%;
-    background-color: rgba(15,15,15, 75%);
+    background-color: rgba(15, 15, 15, 75%);
 }
 
-.User{
+.User {
     font-weight: bold;
     font-family: "Gill Sans MT";
     font-size: xx-large;
-    border:solid 10px rgba(0,0,0,100%);
+    border: solid 10px rgba(0, 0, 0, 100%);
     border-radius: 15%;
-    background-color: rgba(10,10,10,100%);
-    padding:5px;
+    background-color: rgba(10, 10, 10, 100%);
+    padding: 5px;
 }
 
 
-.login{
+.login {
     background: gold;
-    color:Black;
+    color: Black;
     font-weight: bold;
     font-family: "Gill Sans MT";
 }

@@ -1,15 +1,15 @@
-body{
+body {
     background-image: url("../Images/5.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
 }
 
-html{
+html {
     height: 100%;
 }
 
-.container{
+.container {
     height: 100%;
-    background-color: rgba(15,15,15, 75%);
+    background-color: rgba(15, 15, 15, 75%);
 }

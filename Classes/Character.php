@@ -1,6 +1,7 @@
 <?php
 
 namespace Classes;
+
 use character_id;
 
 class Character

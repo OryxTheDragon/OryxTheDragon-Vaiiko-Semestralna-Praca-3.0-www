@@ -29,13 +29,10 @@ class App
         }
         if (isset($_POST["zmazatUcet"])) {
             $bool = boolval($_POST['zmazatUcet']);
-            if (!$bool){
-                echo "<script>alert('Mazanie uctu bolo zamietnute.')</script>";
+            if (!$bool) {
                 return -2;
             }
-            echo "<script>alert('Mazanie uctu bolo uspesne.')</script>";
             $this->storage->deleteUser();
-            Redirektor::navratDomov();
         }
         if (isset($_POST["premenovat"])) {
             $this->storage->updateUsername($_POST['newUsername']);
@@ -47,23 +44,23 @@ class App
             $this->storage->deleteCharacter($_POST['characterID']);
         }
         if (isset($_POST["premenovatCharakter"])) {
-            if (!strval($_POST['newCharacterName']) < 3 && !strval($_POST['newCharacterName'] > 15)){
+            if (!strval($_POST['newCharacterName']) < 3 && !strval($_POST['newCharacterName'] > 15)) {
                 echo "<script>alert('Zadali ste nevyhovujuce meno. Zadajte nové, ktoré má viac ako 3 a menej ako 15 charakterov.')</script>";
                 return -2;
             }
-            $this->storage->renameCharacter($_POST['characterID'],$_POST['newCharacterName']);
+            $this->storage->renameCharacter($_POST['characterID'], $_POST['newCharacterName']);
         }
         if (isset($_POST["premenovatSpecializaciu"])) {
-            $this->storage->updateSpecialisationName($_POST['specialisationID'],$_POST['newSpecialisationName']);
+            $this->storage->updateSpecialisationName($_POST['specialisationID'], $_POST['newSpecialisationName']);
         }
         if (isset($_POST["premenovatProfesiu"])) {
-            $this->storage->updateProfessionName($_POST['professionID'],$_POST['newProfessionName']);
+            $this->storage->updateProfessionName($_POST['professionID'], $_POST['newProfessionName']);
         }
         if (isset($_POST["premenovatRasu"])) {
-            $this->storage->updateRaceName($_POST['raceID'],$_POST['newRaceName']);
+            $this->storage->updateRaceName($_POST['raceID'], $_POST['newRaceName']);
         }
         if (isset($_POST["premenovatPohlavie"])) {
-            $this->storage->updateGenderName($_POST['genderID'],$_POST['newGenderName']);
+            $this->storage->updateGenderName($_POST['genderID'], $_POST['newGenderName']);
         }
 
 
@@ -89,7 +86,6 @@ class App
         if (isset($_GET["getProfesiu"])) {
             $this->storage->getProfession($_GET["professionID"]);
         }
-
 
 
         /** Redirekty */

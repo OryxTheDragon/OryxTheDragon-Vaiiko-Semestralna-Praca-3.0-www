@@ -63,13 +63,13 @@ if (!\Classes\Authenticator::isLogged()) {
                             </button>
                         </form>
                     </li>
-                        <li class="nav-item p-1">
-                            <form method="get">
+                    <li class="nav-item p-1">
+                        <form method="get">
                             <button class="btn btn-secondary" type="submit" name="redirectRegistracia"
                                     value="redirectRegistracia">Registrovat
                             </button>
-                            </form>
-                        </li>
+                        </form>
+                    </li>
                 <?php } ?>
                 <li class="nav-item p-1">
                     <form method="get">

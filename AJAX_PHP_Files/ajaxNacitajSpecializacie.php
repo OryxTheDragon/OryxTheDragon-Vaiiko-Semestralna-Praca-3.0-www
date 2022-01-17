@@ -18,7 +18,7 @@ if ($profID > 0 && $profID <= 9) {
     while ($row = mysqli_fetch_row($result)) {
         $specID = $row[0];
         $specName = $row[1];
-        echo ("<option value=".'"'.$specID.'"'.">".$specName."</option>");
+        echo("<option value=" . '"' . $specID . '"' . ">" . $specName . "</option>");
     }
     $result->free_result();
 }

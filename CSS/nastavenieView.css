@@ -1,27 +1,28 @@
-body{
+body {
     background-image: url("../Images/3.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
 }
-html{
+
+html {
     height: 100%;
 }
 
-.container{
+.container {
     height: 100%;
-    background-color: rgba(15,15,15, 75%);
+    background-color: rgba(15, 15, 15, 75%);
 }
 
-.innerbox{
+.innerbox {
     height: 400px;
-    margin:10%;
+    margin: 10%;
     min-width: 30%;
-    border:rgba(40,40,40,0%) solid 35px;
-    background-color: rgba(40,40,40,75%);
+    border: rgba(40, 40, 40, 0%) solid 35px;
+    background-color: rgba(40, 40, 40, 75%);
 }
 
-label{
+label {
     font-size: x-large;
     font-weight: bold;
 }

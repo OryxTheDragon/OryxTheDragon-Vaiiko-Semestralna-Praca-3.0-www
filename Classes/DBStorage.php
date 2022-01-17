@@ -34,15 +34,15 @@ class DBStorage implements IStorage
 
     public function createUser(User $user)
     {
-        if (!$this->validateUserLogin($user->getUsername())){
+        if (!$this->validateUserLogin($user->getUsername())) {
             return -2;
         }
-        if (!$this->validatePassword($user->getPassword())){
+        if (!$this->validatePassword($user->getPassword())) {
             return -2;
         }
         $stmt = $this->db->prepare("INSERT INTO users(username,password) VALUES (?,?)");
         $username = $user->getUsername();
-        $encryptedPassword = password_hash($user->getPassword(),PASSWORD_DEFAULT);
+        $encryptedPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $stmt->bind_param('ss', $username, $encryptedPassword);
         $stmt->execute();
         $this->checkDBErrors();
@@ -67,10 +67,10 @@ class DBStorage implements IStorage
 
     public function updateUsername($newUsername)
     {
-        if (!$this->validateUsername($newUsername)){
+        if (!$this->validateUsername($newUsername)) {
             return -2;
         }
-        if (!$this->validateUserLogin($newUsername)){
+        if (!$this->validateUserLogin($newUsername)) {
             return -2;
         }
         if (Authenticator::isLogged()) {
@@ -86,32 +86,33 @@ class DBStorage implements IStorage
             echo '<script>alert("Najskor sa musite prihlasit.")</script>';
         }
     }
+
     public function updatePassword($oldPassword, $newPassword)
     {
-        if (!$this->validatePassword($oldPassword)){
+        if (!$this->validatePassword($oldPassword)) {
             return -2;
         }
 
-        if (!$this->validatePassword($newPassword)){
+        if (!$this->validatePassword($newPassword)) {
             return -2;
         }
         if (Authenticator::isLogged()) {
             $username = Authenticator::getName();
-            if (!$this->validateUsername($username)){
+            if (!$this->validateUsername($username)) {
                 echo "<script>alert('How in the sweet guinea pig of Winnipeg have you managed this?.')</script>";
                 return -10;
             }
             $query = ('SELECT password FROM users WHERE username = ?');
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('s',$username);
+            $stmt->bind_param('s', $username);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     if (password_verify($oldPassword, $row["password"])) {
                         $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE username = ?");
-                        $passwordUpdate = password_hash($newPassword , PASSWORD_DEFAULT);
-                        $stmt->bind_param("ss", $passwordUpdate,$username);
+                        $passwordUpdate = password_hash($newPassword, PASSWORD_DEFAULT);
+                        $stmt->bind_param("ss", $passwordUpdate, $username);
                         $stmt->execute();
                         $this->checkDBErrors();
                         echo '<script>alert("Heslo bolo uspesne zmenene.")</script>';
@@ -128,10 +129,10 @@ class DBStorage implements IStorage
 
     public function getAuthentication($username, $password)
     {
-        if (!$this->validateUsername($username)){
+        if (!$this->validateUsername($username)) {
             return -2;
         }
-        if (!$this->validatePassword($password)){
+        if (!$this->validatePassword($password)) {
             return -2;
         }
         $stmt = $this->db->prepare("SELECT password FROM users WHERE username = ? ");
@@ -178,12 +179,12 @@ class DBStorage implements IStorage
         $userID = 0;
         $user = Authenticator::getName();
         $sql = $this->db->prepare("SELECT id FROM users WHERE username = ?");
-        $sql->bind_param('s',$user);
+        $sql->bind_param('s', $user);
         $sql->execute();
         $result = $sql->get_result();
 
         if ($result->num_rows > 0) {
-            if($record = $result->fetch_assoc()) {
+            if ($record = $result->fetch_assoc()) {
                 $userID = $record['id'];
             }
         }
@@ -192,54 +193,54 @@ class DBStorage implements IStorage
 
     public function createCharacter(Character $character)
     {
-        $sql = ("SELECT user_id FROM users WHERE username =".'"'.Authenticator::login().'"');
+        $sql = ("SELECT user_id FROM users WHERE username =" . '"' . Authenticator::login() . '"');
         $result = $this->db->query($sql);
         $characterUserID = $result['user_id'];
         $result->free_result();
 
-        if (!$this->validateNickname($character->getNickname())){
+        if (!$this->validateNickname($character->getNickname())) {
             return -2;
         }
         $characterNickname = $character->getNickname();
 
-        if (!$this->validateProfession($character->getCharacterprofId())){
+        if (!$this->validateProfession($character->getCharacterprofId())) {
             return -2;
         }
 
         $characterProfession = $character->getCharacterprofId();
 
-        if (!$this->validateSpecialisation($characterProfession,$character->getCharacterSpecId())){
+        if (!$this->validateSpecialisation($characterProfession, $character->getCharacterSpecId())) {
             return -2;
         }
         $characterSpecialisation = $character->getCharacterSpecId();
 
-        if (!$this->validateRace($character->getCharacterRaceId())){
+        if (!$this->validateRace($character->getCharacterRaceId())) {
             return -2;
         }
         $characterRace = $character->getCharacterRaceId();
 
-        if (!$this->validateGender($character->getCharacterGenderId())){
+        if (!$this->validateGender($character->getCharacterGenderId())) {
             return -2;
         }
         $characterGender = $character->getCharacterGenderId();
 
         $stmt = $this->db->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+        $stmt->bind_param('ssssss', $characterUserID, $characterNickname, $characterProfession, $characterSpecialisation, $characterRace, $characterGender);
         $stmt->execute();
         $this->checkDBErrors();
 
         echo '<script>alert("Character uspesne vytvoreny.")</script>';
     }
 
-    public function renameCharacter($characterID,$characterName)
+    public function renameCharacter($characterID, $characterName)
     {
-        if (!$this->validateNickname($characterName)){
+        if (!$this->validateNickname($characterName)) {
             return -2;
         }
         $newCharacterName = $characterName;
         $stmt = $this->db->prepare("UPDATE characters SET nickname = ? WHERE character_id = ? ");
-        $stmt->bind_param('ss',$newCharacterName,$characterID);
-        if ($stmt->execute()){
+        $stmt->bind_param('ss', $newCharacterName, $characterID);
+        if ($stmt->execute()) {
             $this->checkDBErrors();
             echo '<script>alert("Character uspesne premenovany.")</script>';
             return true;
@@ -252,8 +253,8 @@ class DBStorage implements IStorage
     {
         $userID = $this->getUserID();
         $stmt = $this->db->prepare("DELETE FROM characters WHERE character_id = ? AND user_id = ?");
-        $stmt->bind_param('ss',$characterID,$userID);
-        if ($stmt->execute()){
+        $stmt->bind_param('ss', $characterID, $userID);
+        if ($stmt->execute()) {
             $this->checkDBErrors();
             echo '<script>alert("Character uspesne zmazany.")</script>';
             return true;
@@ -266,29 +267,31 @@ class DBStorage implements IStorage
     /**
      *      2/4 CRUD Operácie nad vedľajšími tabuľkami.
      */
-    public function getSpecialisation($specialisationID){
+    public function getSpecialisation($specialisationID)
+    {
         $specInfo[] = "";
         $this->validateSpecialisation($specialisationID);
         $sql = $this->db->prepare("SELECT * FROM specialisations ORDER BY specialisation_id ASC");
-        $sql->bind_param('s',$specialisationID);
+        $sql->bind_param('s', $specialisationID);
         $sql->execute();
         $result = $sql->get_result();
 
-            while ($row = mysqli_fetch_row($result)) {
-                $specInfo[0] = $row[0];
-                $specInfo[1] = $row[1];
-                $specInfo[2] = $row[2];
-            }
-        $result->free_result();
-        return  $specInfo;
+        while ($row = mysqli_fetch_row($result)) {
+            $specInfo[0] = $row[0];
+            $specInfo[1] = $row[1];
+            $specInfo[2] = $row[2];
         }
+        $result->free_result();
+        return $specInfo;
+    }
 
-    public function updateSpecialisationName($specialisationID,$newSpecialisationName){
+    public function updateSpecialisationName($specialisationID, $newSpecialisationName)
+    {
         $this->validateSpecialisation($specialisationID);
         $sql = $this->db->prepare("UPDATE specialisations SET specialisation_name = ? WHERE specialisations_id = ?");
-        $sql->bind_param('ss',$newSpecialisationName,$specialisationID);
+        $sql->bind_param('ss', $newSpecialisationName, $specialisationID);
         $sql->execute();
-        if ($sql->execute()){
+        if ($sql->execute()) {
             echo "<script>alert('Zmena nazvu specializacie prebehla uspesne.')</script>";
             return true;
         }
@@ -297,11 +300,12 @@ class DBStorage implements IStorage
     }
 
 
-    public function getProfession($professionID){
+    public function getProfession($professionID)
+    {
         $profInfo[] = "";
         $this->validateProfession($professionID);
         $sql = $this->db->prepare("SELECT * FROM professions WHERE profession_id = ?");
-        $sql->bind_param('s',$professionID);
+        $sql->bind_param('s', $professionID);
         $sql->execute();
         $result = $sql->get_result();
         while ($row = mysqli_fetch_row($result)) {
@@ -309,15 +313,16 @@ class DBStorage implements IStorage
             $profInfo[1] = $row[1];
         }
         $result->free_result();
-        return  $profInfo;
+        return $profInfo;
     }
 
-    public function updateProfessionName($professionID,$newProfessionName){
+    public function updateProfessionName($professionID, $newProfessionName)
+    {
         $this->validateProfession($professionID);
         $sql = $this->db->prepare("UPDATE professions SET profession_name = ? WHERE profession_id = ?");
-        $sql->bind_param('ss',$newProfessionName,$professionID);
+        $sql->bind_param('ss', $newProfessionName, $professionID);
         $sql->execute();
-        if ($sql->execute()){
+        if ($sql->execute()) {
             echo "<script>alert('Zmena nazvu profesie prebehla uspesne')</script>";
             return true;
         }
@@ -325,11 +330,12 @@ class DBStorage implements IStorage
         return false;
     }
 
-    public function getRace($raceID){
+    public function getRace($raceID)
+    {
         $raceInfo[] = "";
         $this->validateRace($raceID);
         $sql = $this->db->prepare("SELECT * FROM races WHERE race_id = ?");
-        $sql->bind_param('s',$raceID);
+        $sql->bind_param('s', $raceID);
         $sql->execute();
         $result = $sql->get_result();
         while ($row = mysqli_fetch_row($result)) {
@@ -337,14 +343,16 @@ class DBStorage implements IStorage
             $raceInfo[1] = $row[1];
         }
         $result->free_result();
-        return  $raceInfo;
+        return $raceInfo;
     }
-    public function updateRaceName($raceID,$newRaceName){
+
+    public function updateRaceName($raceID, $newRaceName)
+    {
         $this->validateRace($raceID);
         $sql = $this->db->prepare("UPDATE races SET race_name = ? WHERE race_id = ?");
-        $sql->bind_param('ss',$newRaceName,$raceID);
+        $sql->bind_param('ss', $newRaceName, $raceID);
         $sql->execute();
-        if ($sql->execute()){
+        if ($sql->execute()) {
             echo "<script>alert('Zmena nazvu rasy prebehla uspesne.')</script>";
             return true;
         }
@@ -352,11 +360,12 @@ class DBStorage implements IStorage
         return false;
     }
 
-    public function getGender($genderID) {
+    public function getGender($genderID)
+    {
         $genderInfo[] = "";
         $this->validateGender($genderID);
         $sql = $this->db->prepare("SELECT * FROM genders WHERE gender_id = ?");
-        $sql->bind_param('s',$genderID);
+        $sql->bind_param('s', $genderID);
         $sql->execute();
         $result = $sql->get_result();
         while ($row = mysqli_fetch_row($result)) {
@@ -364,14 +373,16 @@ class DBStorage implements IStorage
             $genderInfo[1] = $row[1];
         }
         $result->free_result();
-        return  $genderInfo;
+        return $genderInfo;
     }
-    public function updateGenderName($genderID,$newGenderName){
+
+    public function updateGenderName($genderID, $newGenderName)
+    {
         $this->validateGender($genderID);
         $sql = $this->db->prepare("UPDATE genders SET gender_name = ? WHERE gender_id = ?");
-        $sql->bind_param('ss',$newGenderName,$genderID);
+        $sql->bind_param('ss', $newGenderName, $genderID);
         $sql->execute();
-        if ($sql->execute()){
+        if ($sql->execute()) {
             echo "<script>alert('Zmena nazvu pohlavia prebehla uspesne.')</script>";
             return true;
         }
@@ -404,32 +415,34 @@ class DBStorage implements IStorage
 
     private function validateGender(int $getGender)
     {
-        if (!($getGender > 0 && $getGender<= 3)){
+        if (!($getGender > 0 && $getGender <= 3)) {
             echo "<script>alert('Zle zadane pohlavie!')</script>";
             return false;
         }
         return true;
     }
+
     private function validateProfession(int $getProfession)
     {
-        if (!($getProfession > 0 && $getProfession <= 9)){
+        if (!($getProfession > 0 && $getProfession <= 9)) {
             echo "<script>alert('Zle zadana profesia!')</script>";
             return false;
         }
         return true;
     }
+
     private function validateRace(int $getRace)
     {
-        if (!($getRace > 0 && $getRace<= 5)){
+        if (!($getRace > 0 && $getRace <= 5)) {
             echo "<script>alert('Zle zadana rasa!')</script>";
             return false;
         }
         return true;
     }
 
-    private function validateSpecialisation(int $getProfessia,$getSpecialisation)
+    private function validateSpecialisation(int $getProfessia, $getSpecialisation)
     {
-        if (!($getSpecialisation >= ($getProfessia*3 + 15) && $getSpecialisation <= ($getProfessia*3 + 17))){
+        if (!($getSpecialisation >= ($getProfessia * 3 + 15) && $getSpecialisation <= ($getProfessia * 3 + 17))) {
             echo "<script>alert('Zle zadana specializacia!')</script>";
             return false;
         }
@@ -438,21 +451,22 @@ class DBStorage implements IStorage
 
     private function validateNickname(string $getNickname)
     {
-        if (!(strlen($getNickname)  > 3)){
+        if (!(strlen($getNickname) > 3)) {
             echo "<script>alert('Zadany nickname je prilis kratky!')</script>";
             return false;
         }
-        if (!(strlen($getNickname)  <= 15)){
+        if (!(strlen($getNickname) <= 15)) {
             echo "<script>alert('Zadany nickname je prilis dlhy!)</script>";
             return false;
         }
         return true;
     }
 
-    private function validateUserLogin($login){
+    private function validateUserLogin($login)
+    {
 
         $sql = $this->db->prepare("SELECT * FROM users WHERE username = ?");
-        $sql->bind_param('s',$login);
+        $sql->bind_param('s', $login);
         $sql->execute();
         $dbResult = $sql->get_result();
 

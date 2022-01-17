@@ -1,22 +1,22 @@
-body{
+body {
     background-image: url("../Images/2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
 }
 
-html{
+html {
     height: 100%;
 }
 
-.container{
+.container {
     height: 100%;
-    background-color: rgba(15,15,15, 75%);
+    background-color: rgba(15, 15, 15, 75%);
 }
 
-.login{
+.login {
     background: gold;
-    color:black;
+    color: black;
     font-weight: bold;
     font-family: "Gill Sans MT";
 }

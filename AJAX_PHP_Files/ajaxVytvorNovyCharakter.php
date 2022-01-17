@@ -26,16 +26,16 @@ $sql->bind_param("s", $username);
 $sql->execute();
 $dbResult = $sql->get_result();
 if ($dbResult->num_rows > 0) {
-    if($record = $dbResult->fetch_assoc()) {
+    if ($record = $dbResult->fetch_assoc()) {
         $characterUserID = $record['id'];
     }
 }
 $dbResult->free_result();
 
 $stmt = $con->prepare("INSERT INTO characters(user_id,nickname,character_prof_id,character_spec_id,character_race_id,character_gender_id) VALUES (?,?,?,?,?,?)");
-$stmt->bind_param('ssssss',$characterUserID,$characterNickname,$characterProfession,$characterSpecialisation,$characterRace,$characterGender);
+$stmt->bind_param('ssssss', $characterUserID, $characterNickname, $characterProfession, $characterSpecialisation, $characterRace, $characterGender);
 
-if ($stmt->execute()){
+if ($stmt->execute()) {
     $this->checkDBErrors();
     return true;
 }

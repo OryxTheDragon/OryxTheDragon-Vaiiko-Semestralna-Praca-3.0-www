@@ -201,25 +201,25 @@
     height: auto;
 }
 
-.GenderTableData{
+.GenderTableData {
     height: 30px;
     overflow: hidden;
     white-space: nowrap;
 }
 
-#tableList{
+#tableList {
 
     border-radius: 3%;
     background-color: #212529;
     border-color: #212529;
 }
 
-#ZobrazCharakterContainer{
+#ZobrazCharakterContainer {
     border-radius: 3%;
     background-color: #212529;
 }
 
-table{
+table {
     border: 15px solid;
 }
 
