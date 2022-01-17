@@ -52,7 +52,6 @@ $app = new App();
     </div>
     <div class="col-1"></div>
 </nav>
-
 <div class="container">
     <?php if (!Authenticator::isLogged()) { ?>
         <nav class="navbar justify-content-center">

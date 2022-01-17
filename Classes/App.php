@@ -28,7 +28,14 @@ class App
             $this->storage->createCharacter(new Character($this->storage->getUserID(), $_POST['nickname'], $_POST['profession'], $_POST['specialisation'], $_POST['race'], $_POST['gender']));
         }
         if (isset($_POST["zmazatUcet"])) {
+            $bool = boolval($_POST['zmazatUcet']);
+            if (!$bool){
+                echo "<script>alert('Mazanie uctu bolo zamietnute.')</script>";
+                return -2;
+            }
+            echo "<script>alert('Mazanie uctu bolo uspesne.')</script>";
             $this->storage->deleteUser();
+            Redirektor::navratDomov();
         }
         if (isset($_POST["premenovat"])) {
             $this->storage->updateUsername($_POST['newUsername']);

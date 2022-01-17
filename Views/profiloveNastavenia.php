@@ -89,17 +89,8 @@ $app = new App();
 
             <div class="col text-center">
                 <form method="post">
-                    <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="zmazatUcet"
-                            onclick="function areYouSure() {
-                                if (confirm('Ste si isty, ze chcete zmazat vas ucet?')){
-                                    alert('Odsuhlasilo sa mazanie.');
-                                    return true;
-                                } else{
-                                    alert('Neodsuhlasilo sa mazanie.');
-                                    return false
-                                }
-                                }
-                            areYouSure()">
+                    <button class="btn btn-secondary btn btn-danger" type="submit" name="zmazatUcet" value="asdasd"
+                            onclick="this.value=confirm('Ste si isty, ze chcete zmazat vas ucet?')">
                         Zmazať Účet
                     </button>
                 </form>
