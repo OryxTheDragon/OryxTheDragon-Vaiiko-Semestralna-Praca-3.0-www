@@ -70,6 +70,9 @@ class DBStorage implements IStorage
         if (!$this->validateUsername($newUsername)){
             return -2;
         }
+        if (!$this->validateUserLogin($newUsername)){
+            return -2;
+        }
         if (Authenticator::isLogged()) {
             $stmt = $this->db->prepare("UPDATE users SET username = ? WHERE username = ? ");
             $oldUsername = Authenticator::getName();
@@ -230,7 +233,9 @@ class DBStorage implements IStorage
 
     public function renameCharacter($characterID,$characterName)
     {
-        $this->validateNickname($characterName);
+        if (!$this->validateNickname($characterName)){
+            return -2;
+        }
         $newCharacterName = $characterName;
         $stmt = $this->db->prepare("UPDATE characters SET nickname = ? WHERE character_id = ? ");
         $stmt->bind_param('ss',$newCharacterName,$characterID);
@@ -346,6 +351,7 @@ class DBStorage implements IStorage
         echo "<script>alert('Zmena nazvu rasy prebehla neuspesne.')</script>";
         return false;
     }
+
     public function getGender($genderID) {
         $genderInfo[] = "";
         $this->validateGender($genderID);

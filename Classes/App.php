@@ -40,6 +40,10 @@ class App
             $this->storage->deleteCharacter($_POST['characterID']);
         }
         if (isset($_POST["premenovatCharakter"])) {
+            if (!strval($_POST['newCharacterName']) < 3 && !strval($_POST['newCharacterName'] > 15)){
+                echo "<script>alert('Zadali ste nevyhovujuce meno. Zadajte nové, ktoré má viac ako 3 a menej ako 15 charakterov.')</script>";
+                return -2;
+            }
             $this->storage->renameCharacter($_POST['characterID'],$_POST['newCharacterName']);
         }
         if (isset($_POST["premenovatSpecializaciu"])) {

@@ -20,55 +20,10 @@ $app = new App();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <script src="../JSFiles/validaciaRegistracia.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../CSS/registraciaView.css">
     <link rel="stylesheet" href="../CSS/BasicDarkMode.css">
-
-    <script>
-
-
-        let Link;
-        let PP;
-        PP = Math.floor(Math.random() * 3);
-        switch (PP) {
-            case 0:
-                Link = "https://twitter.com/en/privacy";
-                break;
-            case 1:
-                Link = "https://www.facebook.com/about/basics/privacy-principles";
-                break;
-            case 2:
-                Link = "https://help.instagram.com/519522125107875";
-                break;
-            default:
-                Link = "https://about.9gag.com/privacy";
-                break;
-        }
-
-        function makeLink() {
-            document.write('<a target="_blank" href="' + Link + ' " +>privacy policy</a>');
-        }
-
-        function delay(n) {
-            return new Promise(function (resolve) {
-                setTimeout(resolve, n * 1000);
-            });
-        }
-
-        function validaciaRegistracie() {
-            let username = document.forms["registracia"]["username"].value;
-            let password = document.forms["registracia"]["password"].value;
-            if (username.length < 4) {
-                alert("Username must be at least 4 characters long.");
-                return false;
-            }
-            if (password.length < 8) {
-                alert("Password must be at least 8 characters long.");
-                return false;
-            }
-            return true;
-        }
-    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
