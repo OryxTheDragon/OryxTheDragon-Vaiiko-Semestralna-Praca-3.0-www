@@ -16,7 +16,6 @@ $characterGender = intval($data[4]);
 $username = strval($data[5]);
 
 
-
 $con = mysqli_connect('localhost', 'root', 'dtb456', 'databaza');
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));

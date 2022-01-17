@@ -40,6 +40,9 @@ class App
             $this->storage->deleteCharacter($_POST['characterID']);
         }
         if (isset($_POST["premenovatCharakter"])) {
+            $this->storage->renameCharacter($_POST['characterID'],$_POST['newCharacterName']);
+        }
+        if (isset($_POST["premenovatSpecializaciu"])) {
             $this->storage->updateSpecialisationName($_POST['specialisationID'],$_POST['newSpecialisationName']);
         }
         if (isset($_POST["premenovatProfesiu"])) {

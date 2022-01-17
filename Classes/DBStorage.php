@@ -34,12 +34,10 @@ class DBStorage implements IStorage
 
     public function createUser(User $user)
     {
-        if (!$this->validateUsername($user->getUsername())){
-            echo "<script>alert('Wrong username attempted for input into database.')</script>";
+        if (!$this->validateUserLogin($user->getUsername())){
             return -2;
         }
         if (!$this->validatePassword($user->getPassword())){
-            echo "<script>alert('Wrong password attempted for input into database.')</script>";
             return -2;
         }
         $stmt = $this->db->prepare("INSERT INTO users(username,password) VALUES (?,?)");
@@ -70,7 +68,6 @@ class DBStorage implements IStorage
     public function updateUsername($newUsername)
     {
         if (!$this->validateUsername($newUsername)){
-            echo "<script>alert('Wrong new username attempted for input.')</script>";
             return -2;
         }
         if (Authenticator::isLogged()) {
@@ -89,18 +86,15 @@ class DBStorage implements IStorage
     public function updatePassword($oldPassword, $newPassword)
     {
         if (!$this->validatePassword($oldPassword)){
-            echo "<script>alert('Wrong old password attempted for input.')</script>";
             return -2;
         }
 
         if (!$this->validatePassword($newPassword)){
-            echo "<script>alert('Wrong new password attempted for input.')</script>";
             return -2;
         }
         if (Authenticator::isLogged()) {
             $username = Authenticator::getName();
             if (!$this->validateUsername($username)){
-                echo "<script>alert('Prihlaseny pouzivatel ma nevyhovujuce meno.')</script>";
                 echo "<script>alert('How in the sweet guinea pig of Winnipeg have you managed this?.')</script>";
                 return -10;
             }
@@ -132,11 +126,9 @@ class DBStorage implements IStorage
     public function getAuthentication($username, $password)
     {
         if (!$this->validateUsername($username)){
-            echo "<script>alert('Wrong username attempted for input.')</script>";
             return -2;
         }
         if (!$this->validatePassword($password)){
-            echo "<script>alert('Wrong password attempted for.')</script>";
             return -2;
         }
         $stmt = $this->db->prepare("SELECT password FROM users WHERE username = ? ");
@@ -386,15 +378,19 @@ class DBStorage implements IStorage
      * */
     private function validateUsername(string $getUsername)
     {
-        if (strlen($getUsername) < 4) {
+
+        if ((strlen($getUsername) < 4) && (strlen($getUsername) > 15)) {
+            echo "<script>alert('Zadane meno nevyhovuje podmienkam. Prosim zadajte meno ktore ma aspon 3 znakov a maximalne 15 znakov.')</script>";
             return false;
         }
+
         return true;
     }
 
     private function validatePassword(string $getPassword)
     {
         if (strlen($getPassword) < 8) {
+            echo "<script>alert('Zadane heslo nevyhovuje podmienkam. Prosim zadajte heslo ktore ma aspon 8 znakov.')</script>";
             return false;
         }
         return true;
@@ -442,6 +438,20 @@ class DBStorage implements IStorage
         }
         if (!(strlen($getNickname)  <= 15)){
             echo "<script>alert('Zadany nickname je prilis dlhy!)</script>";
+            return false;
+        }
+        return true;
+    }
+
+    private function validateUserLogin($login){
+
+        $sql = $this->db->prepare("SELECT * FROM users WHERE username = ?");
+        $sql->bind_param('s',$login);
+        $sql->execute();
+        $dbResult = $sql->get_result();
+
+        if (!($dbResult->num_rows == 0)) {
+            echo "<script>alert('Vybrany nazov charakteru uz je zabraty! Zvolte prosim iny nickname.')</script>";
             return false;
         }
         return true;
